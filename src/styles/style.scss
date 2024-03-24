@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import 'base';
+@import 'utils';
+@import '@rainbow-me/rainbowkit/styles.css';
+
+/* tbody {
+  display: block;
+  overflow: auto;
+}
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+} */
+.root,
+#root,
+#docs-root {
+  --primary-color: #ff0000;
+  --secondary-color: #000;
+  overflow: hidden;
+}
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}

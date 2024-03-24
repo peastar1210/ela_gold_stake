@@ -1,0 +1,379 @@
+import axios from 'axios'
+import { useEffect, useState, useRef } from 'react'
+import Highcharts from 'highcharts/highstock'
+import HighchartsReact from 'highcharts-react-official'
+import candleData from '../../pricejson/pricejson.json'
+let wheelFlag = false
+export default function PriceCandleChart(props: any) {
+  const [seriesData, setSeriesData] = useState([])
+  const [dailyButton, setDailyButton] = useState('bg-gray-700')
+  const [weeklyButton, setWeeklyButton] = useState('bg-gray-600')
+  const [monthlyButton, setMonthlyButton] = useState('bg-gray-600')
+  const [interval, setInterval] = useState('day')
+  const [priceButton, setPriceButton] = useState('bg-gray-700')
+  const [volumeButton, setVolumeButton] = useState('bg-gray-600')
+  const [chartType, setChartType] = useState('price')
+  const [volume, setVolume] = useState([])
+  const volumeOptions = {
+    chart: {
+      height: 350,
+      width: props.width,
+      // backgroundColor: '#1e293b',
+      color: 'white',
+      border: 'white',
+    },
+    rangeSelector: {
+      selected: 1, // This selects the default range (e.g. daily, weekly, monthly)
+      buttons: [],
+    },
+    series: [
+      {
+        name: 'GOLD token price',
+        type: 'spline',
+        data: volume,
+        // dataGrouping: {
+        //   units: [['week', [1]]],
+        //   enabled: false,
+        // },
+        pointPlacement: 0.1,
+      },
+    ],
+    navigator: {
+      enabled: false,
+    },
+    // plotOptions: {
+    //   candlestick: {
+    //     upColor: '#089981', // Color for when the close value is higher than the open value
+    //     color: '#f23645', // Color for when the close value is lower than the open value
+    //     pointPadding: 0,
+    //     groupPadding: 0,
+    //     upLineColor: '#089981',
+    //     lineColor: '#f23645',
+    //   },
+    // },
+    xAxis: {
+      lineColor: '#333333',
+      gridLineColor: '#333333',
+      gridLineWidth: 1,
+      labels: {
+        style: {
+          color: 'black', // Set the x-axis text color
+        },
+      },
+    },
+    yAxis: {
+      lineColor: '#333333',
+      gridLineColor: '#333333',
+      gridLineWidth: 1,
+      labels: {
+        style: {
+          color: 'black', // Set the y-axis text color
+        },
+      },
+    },
+    accessibility: { enabled: false },
+  }
+  const options = {
+    chart: {
+      height: 350,
+      width: props.width,
+      // backgroundColor: '#1e293b',
+      backgroundColor: "white",
+      color: 'white',
+      border: 'white',
+      panning: true,
+    },
+    rangeSelector: {
+      selected: 1, // This selects the default range (e.g. daily, weekly, monthly)
+      buttons: [],
+    },
+    scrollbar: {
+      enabled: false,
+    },
+    scrollablePlotArea: {
+      minWidth: 300, // Set the minimum width
+      maxWidth: 300, // Set the maximum width
+    },
+    series: [
+      {
+        name: 'GOLD token price',
+        type: 'candlestick',
+        data: seriesData,
+        dataGrouping: {
+          units: [['week', [1]]],
+          enabled: false,
+        },
+        // pointPlacement: 0.5,
+        // pointWidth: 10,
+      },
+    ],
+    navigator: {
+      enabled: false,
+    },
+    plotOptions: {
+      candlestick: {
+        upColor: '#089981', // Color for when the close value is higher than the open value
+        color: '#f23645', // Color for when the close value is lower than the open value
+        pointPadding: 0,
+        groupPadding: chartType === 'price' && interval === 'month' ? 0.003 : 0.01,
+        upLineColor: '#089981',
+        lineColor: '#f23645',
+      },
+    },
+    xAxis: {
+      lineColor: 'black',
+      gridLineColor: 'black',
+      gridLineWidth: 1,
+      labels: {
+        style: {
+          color: 'black', // Set the x-axis text color
+        },
+      },
+    },
+    yAxis: {
+      lineColor: 'black',
+      gridLineColor: 'black',
+      gridLineWidth: 1,
+      labels: {
+        style: {
+          color: 'black', // Set the y-axis text color
+        },
+      },
+    },
+    accessibility: { enabled: false },
+  }
+  const handlePriceType = (data: any) => {
+    if (data === 'price') {
+      setPriceButton('bg-gray-700')
+      setVolumeButton('bg-gray-600')
+      setChartType('price')
+    } else {
+      setPriceButton('bg-gray-600')
+      setVolumeButton('bg-gray-700')
+      setChartType('volume')
+    }
+  }
+  const handleInterval = date => {
+    if (date === 'daily') {
+      setDailyButton('bg-gray-700')
+      setWeeklyButton('bg-gray-600')
+      setMonthlyButton('bg-gray-600')
+      setInterval('day')
+    } else if (date === 'weekly') {
+      setDailyButton('bg-gray-600')
+      setWeeklyButton('bg-gray-700')
+      setMonthlyButton('bg-gray-600')
+      setInterval('week')
+    } else {
+      setDailyButton('bg-gray-600')
+      setWeeklyButton('bg-gray-600')
+      setMonthlyButton('bg-gray-700')
+      setInterval('month')
+    }
+  }
+  useEffect(() => {
+    const getPriceData = async (interval: any) => {
+      const response = await axios.get(
+        'https://api.geckoterminal.com/api/v2/networks/ela/pools/0xc9d4ab43d81466f336d37b9e10ace1c9ae994bcc/ohlcv/day?limit=1000&currency=usd'
+      )
+      // const response = await axios.get("https://api.geckoterminal.com/api/v2/networks/ela/pools/0xc9d4ab43d81466f336d37b9e10ace1c9ae994bcc/ohlcv/day?before_timestamp=1708104984&limit=1000&currency=USD")
+      let data = []
+      let volume = []
+      for (let i = 1; i < candleData.length; i++) {
+        // const element = [
+        //   candleData[i].time,
+        //   parseFloat(candleData[i].open.toFixed(2)),
+        //   parseFloat(candleData[i].high.toFixed(2)),
+        //   parseFloat(candleData[i].low.toFixed(2)),
+        //   parseFloat(candleData[i].close.toFixed(2)),
+        // ]
+        const element = [
+          candleData[i].time,
+          candleData[i - 1].close,
+          candleData[i].high,
+          candleData[i].low,
+          candleData[i].close,
+        ]
+        data.push(element)
+        const volumeData = [
+          candleData[i].time,
+          parseFloat(candleData[i].volume.toFixed(2)),
+        ]
+        volume.push(volumeData)
+      }
+      if (interval === 'day') {
+        setSeriesData(data)
+        setVolume(volume)
+      } else if (interval === 'week') {
+        const weeklyData = []
+        const weeklyVolume = []
+        let weekStartIndex = 0
+        let weekEndIndex = 6
+        while (weekEndIndex < data.length - 1) {
+          const weeklyElement = [
+            data[weekStartIndex][0], // Use the timestamp of the first day of the week
+            data[weekStartIndex][1], // Calculate the weekly average of the open prices
+            Math.max(...data.slice(weekStartIndex, weekEndIndex).map(day => day[2])), // Find the highest high price within the week
+            Math.min(...data.slice(weekStartIndex, weekEndIndex).map(day => day[3])), // Find the lowest low price within the week
+            data[weekEndIndex + 1][1], // Use the close price of the last day of the week
+          ]
+          const weeklyVolumeData = [
+            volume[weekStartIndex][0],
+            volume.slice(weekStartIndex, weekEndIndex + 1).reduce((sum, day) => sum + day[1], 0) / 7,
+          ]
+          weeklyVolume.push(weeklyVolumeData)
+
+          // Push the weekly data to the weeklyData array
+          weeklyData.push(weeklyElement)
+
+          // Move to the next week
+          weekStartIndex += 7
+          weekEndIndex += 7
+        }
+        setSeriesData(weeklyData)
+        setVolume(weeklyVolume)
+      } else {
+        const monthlyData = []
+        const monthlyVolume = []
+        let monthStartIndex = 0
+        let monthEndIndex = 0
+        while (monthEndIndex < data.length - 2) {
+          // Find the end index of the current month
+          const currentMonth = new Date(data[monthStartIndex][0]).getMonth()
+          while (monthEndIndex < data.length - 2 && new Date(data[monthEndIndex][0]).getMonth() === currentMonth) {
+            monthEndIndex++
+          }{
+            if (data[monthEndIndex]) {
+              // Calculate the monthly OHLCV values
+              const monthlyElement = [
+                data[monthStartIndex][0], // Use the timestamp of the first day of the month
+                data[monthStartIndex][1], // Calculate the monthly average of the open prices
+                Math.max(...data.slice(monthStartIndex, monthEndIndex).map(day => day[2])), // Find the highest high price within the month
+                Math.min(...data.slice(monthStartIndex, monthEndIndex).map(day => day[3])), // Find the lowest low price within the month
+                data[monthEndIndex][1], // Use the close price of the last day of the month
+              ]
+              const monthlyVolumeData = [
+                volume[monthStartIndex][0],
+                volume.slice(monthStartIndex, monthEndIndex).reduce((sum, day) => sum + day[1], 0) /
+                  (monthEndIndex - monthStartIndex),
+              ]
+              monthlyVolume.push(monthlyVolumeData)
+              // Push the monthly data to the monthlyData array
+              monthlyData.push(monthlyElement)
+  
+              // Move to the next month
+              monthStartIndex = monthEndIndex
+            } 
+          }
+        }
+        setSeriesData(monthlyData)
+        setVolume(monthlyVolume)
+      }
+    }
+    getPriceData(interval)
+  }, [interval, chartType])
+  const handleScroll = event => {
+    if (event.deltaY > 0) {
+      this.decreaseValue()
+    } else {
+      this.increaseValue()
+    }
+  }
+  const preventDefault = (e: Event) => {
+    if (e.preventDefault && wheelFlag) {
+      e.preventDefault()
+    }
+    
+  }
+  const enableScroll = () => {
+    wheelFlag = false
+    document.removeEventListener('wheel', preventDefault)
+  }
+  const disableScroll = () => {
+    wheelFlag = true
+    document.addEventListener('wheel', preventDefault, {
+      passive: false,
+    })
+  }
+  return (
+    <>
+      <div className="flex-row bg-white">
+        <div className="mb-[12px] inline-flex w-full text-[12px] text-white">
+          <button
+            className={`rounded-md bg-gray-600 px-2 py-1 ${priceButton} mr-[5px]`}
+            onClick={() => {
+              handlePriceType('price')
+            }}
+          >
+            Price
+          </button>
+          <button
+            className={`rounded-md bg-gray-600 px-2 py-1 ${volumeButton}`}
+            onClick={() => {
+              handlePriceType('daily')
+            }}
+          >
+            Volume
+          </button>
+        </div>
+        <div className="inline-flex text-[12px] text-white">
+          <button
+            className={`rounded-md bg-gray-600 px-2 py-1 ${dailyButton}`}
+            onClick={() => {
+              handleInterval('daily')
+            }}
+          >
+            Daily
+          </button>
+          <button
+            className={`ml-[5px] rounded-md bg-gray-600 px-2 py-1 ${weeklyButton}`}
+            onClick={() => {
+              handleInterval('weekly')
+            }}
+          >
+            Weekly
+          </button>
+          <button
+            className={`ml-[5px] rounded-md bg-gray-600 px-2 py-1 ${monthlyButton}`}
+            onClick={() => {
+              handleInterval('monthly')
+            }}
+          >
+            Monthly
+          </button>
+        </div>
+        {props ? (
+          <>
+            {chartType === 'price' ? (
+              <>
+                {seriesData.length > 0 && (
+                  <div onMouseEnter={disableScroll} onMouseLeave={enableScroll}>
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      constructorType={'stockChart'}
+                      options={options}
+                      height={350}
+                    />
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {seriesData.length > 0 && (
+                  <div onMouseEnter={disableScroll} onMouseLeave={enableScroll}>
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      constructorType={'spline'}
+                      options={volumeOptions}
+                      height={350}
+                    />
+                  </div>
+                )}
+              </>
+            )}
+          </>
+        ) : null}
+      </div>
+    </>
+  )
+}
