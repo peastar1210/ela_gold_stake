@@ -106,7 +106,7 @@ function Staking() {
     const contract = new web3.eth.Contract(contractAbi, ContractAddress)
     const balance = await contract.methods.getContractTokenBalance().call()
     convertBigNumberToInt(balance)
-    const response = await axios.post('https://elastos-gold-backend.onrender.com/api/stakes/getTotalSupplyList', {
+    const response = await axios.post('https://elastos-backend.onrender.com/api/stakes/getTotalSupplyList', {
       totalSupply: convertBigNumberToInt(balance),
     })
     setTotalSupplyList(response.data)
@@ -251,13 +251,13 @@ function Staking() {
         previousAmount: previousAmount,
       }
     }
-    // const response = await axios.post('https://elastos-gold-backend.onrender.com/api/stakes', stakingData)
-    const response = await axios.post('https://elastos-gold-backend.onrender.com/api/stakes', stakingData)
+    // const response = await axios.post('https://elastos-backend.onrender.com/api/stakes', stakingData)
+    const response = await axios.post('https://elastos-backend.onrender.com/api/stakes', stakingData)
     await getTotalList()
   }
   async function getTotalList() {
-    // const response = await axios.post('https://elastos-gold-backend.onrender.com/api/stakes/totalList')
-    const response = await axios.post('https://elastos-gold-backend.onrender.com/api/stakes/totalList')
+    // const response = await axios.post('https://elastos-backend.onrender.com/api/stakes/totalList')
+    const response = await axios.post('https://elastos-backend.onrender.com/api/stakes/totalList')
     setStakersNum(response.data.stakersList.length)
     setDistributedAmount(response.data.distributedAmount)
     setStakersList(response.data.stakersList)

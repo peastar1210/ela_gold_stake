@@ -177,6 +177,9 @@ export default function PriceCandleChart(props: any) {
         'https://api.geckoterminal.com/api/v2/networks/ela/pools/0xc9d4ab43d81466f336d37b9e10ace1c9ae994bcc/ohlcv/day?limit=1000&currency=usd'
       )
       // const response = await axios.get("https://api.geckoterminal.com/api/v2/networks/ela/pools/0xc9d4ab43d81466f336d37b9e10ace1c9ae994bcc/ohlcv/day?before_timestamp=1708104984&limit=1000&currency=USD")
+      console.log("response---->", response.data)
+      const terminalData = response.data.data.attributes.ohlcv_list;
+      console.log("terminalData------>", terminalData[terminalData.length - 1])
       let data = []
       let volume = []
       for (let i = 1; i < candleData.length; i++) {
@@ -200,6 +203,37 @@ export default function PriceCandleChart(props: any) {
           parseFloat(candleData[i].volume.toFixed(2)),
         ]
         volume.push(volumeData)
+      }
+      let counter = 0;
+      for(let i = terminalData.length - 1; i >= 0; i--){
+        if(terminalData[i][0] > 1708128000) {
+          if(counter === 0){
+            const element = [
+              terminalData[i][0] * 1000,
+              data[data.length - 1][1],
+              terminalData[i][2],
+              terminalData[i][3],
+              terminalData[i][4]
+            ]
+            data.push(element)
+            counter ++;
+          } else {
+            const element = [
+              terminalData[i][0] * 1000,
+              terminalData[i][1],
+              terminalData[i][2],
+              terminalData[i][3],
+              terminalData[i][4]
+            ]
+            data.push(element)
+          }
+          
+          const volumeData = [
+            terminalData[i][0],
+            parseFloat(terminalData[i][5].toFixed(2))
+          ]
+          volume.push(volumeData)
+        }
       }
       if (interval === 'day') {
         setSeriesData(data)
