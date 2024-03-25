@@ -27,7 +27,10 @@ export default function PriceCandleChart(props: any) {
         pinchType: "x",
         followTouchMove: false
       },
-      followTouchMove: false
+      followTouchMove: true
+    },
+    tooltip: {
+      followTouchMove : true
     },
     rangeSelector: {
       selected: 1, 
@@ -78,8 +81,13 @@ export default function PriceCandleChart(props: any) {
       panKey: 'shift', // Allow panning only when the Ctrl key is pressed
       pinchType:"x",
       followTouchMove: true,
+      
       // zoomType: "x"
     },
+    tooltip: {
+      followTouchMove : true
+    },
+
     followTouchMove: true,
     events: {
       mouseWheel: function (e: any) {
