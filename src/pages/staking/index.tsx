@@ -525,7 +525,7 @@ function Staking() {
           </div>
           <div className="ml-0 mt-[25px] w-full rounded-[12px] bg-white desktop:ml-[2%] desktop:mt-0 desktop:w-[54.2%]">
             <div className="h-[945px] w-full justify-center rounded-[12px] bg-white shadow-md shadow-gray-400 border border-gray-200">
-              <div className="relative ml-[40px] flex w-full">
+              <div className="relative ml-[40px] flex">
                 <SelectTransactionType
                   chartPrice={chartPrice}
                   handleChangeChart={handleChangeChart}
