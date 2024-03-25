@@ -14,6 +14,7 @@ export default function PriceCandleChart(props: any) {
   const [volumeButton, setVolumeButton] = useState('bg-gray-600')
   const [chartType, setChartType] = useState('price')
   const [volume, setVolume] = useState([])
+  const chartRef = useRef(null);
   const volumeOptions = {
     chart: {
       height: 350,
@@ -326,6 +327,7 @@ export default function PriceCandleChart(props: any) {
     wheelFlag = false
     document.removeEventListener('wheel', preventDefault)
     document.removeEventListener('click', preventDefault)
+    document.removeEventListener('auxclick', preventDefault)
   }
   const disableScroll = () => {
     wheelFlag = true
@@ -335,7 +337,20 @@ export default function PriceCandleChart(props: any) {
     document.addEventListener('click', preventDefault, {
       passive: false,
     })
+    document.addEventListener('auxclick', preventDefault, {
+      passive: false,
+    })
   }
+  useEffect(() => {
+    if (chartRef.current) {
+        const chart = chartRef.current.chart;
+
+        chart.container.addEventListener('touchmove', (event) => {
+            // Handle touch move event on X axis
+            // You can update the chart based on the touch move event
+        });
+    }
+}, [chartRef]);
   return (
     <>
       <div className="flex-row bg-white">
@@ -394,6 +409,7 @@ export default function PriceCandleChart(props: any) {
                       constructorType={'stockChart'}
                       options={options}
                       height={350}
+                      ref={chartRef}
                     />
                   </div>
                 )}
@@ -407,6 +423,7 @@ export default function PriceCandleChart(props: any) {
                       constructorType={'spline'}
                       options={volumeOptions}
                       height={350}
+                      ref={chartRef}
                     />
                   </div>
                 )}
