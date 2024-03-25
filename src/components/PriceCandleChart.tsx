@@ -25,9 +25,9 @@ export default function PriceCandleChart(props: any) {
       pinchType:"x",
       zooming: {
         pinchType: "x",
-        followTouchMove: true
+        followTouchMove: false
       },
-      followTouchMove: true
+      followTouchMove: false
     },
     rangeSelector: {
       selected: 1, 
@@ -78,9 +78,9 @@ export default function PriceCandleChart(props: any) {
       pinchType:"x",
       zooming: {
         pinchType: "x",
-        followTouchMove: true
+        followTouchMove: false
       },
-      followTouchMove: true,
+      followTouchMove: false,
 
       // zoomType: "x"
     },
