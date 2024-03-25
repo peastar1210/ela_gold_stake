@@ -21,9 +21,9 @@ export default function PriceCandleChart(props: any) {
       color: 'white',
       border: 'white',
       panning: true, // Enable panning
-      pinchType:"y",
+      pinchType:"x",
       zooming: {
-        pinchType: "xy"
+        pinchType: "x"
       },
     },
     rangeSelector: {
@@ -72,9 +72,9 @@ export default function PriceCandleChart(props: any) {
       border: 'white',
       panning: true, // Enable panning
       panKey: 'shift', // Allow panning only when the Ctrl key is pressed
-      pinchType:"y",
+      pinchType:"x",
       zooming: {
-        pinchType: "xy"
+        pinchType: "x"
       },
       // zoomType: "x"
     },
