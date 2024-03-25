@@ -410,6 +410,7 @@ export default function PriceCandleChart(props: any) {
                       options={options}
                       height={350}
                       ref={chartRef}
+                      classname='z-50'
                     />
                   </div>
                 )}
@@ -424,6 +425,7 @@ export default function PriceCandleChart(props: any) {
                       options={volumeOptions}
                       height={350}
                       ref={chartRef}
+                      classname='z-50'
                     />
                   </div>
                 )}
