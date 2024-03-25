@@ -65,6 +65,7 @@ export default function PriceCandleChart(props: any) {
       },
     },
     accessibility: { enabled: true },
+    followTouchMove: true,
   }
   const options = {
     chart: {
@@ -76,14 +77,10 @@ export default function PriceCandleChart(props: any) {
       panning: true, // Enable panning
       panKey: 'shift', // Allow panning only when the Ctrl key is pressed
       pinchType:"x",
-      zooming: {
-        pinchType: "x",
-        followTouchMove: true
-      },
       followTouchMove: true,
-
       // zoomType: "x"
     },
+    followTouchMove: true,
     events: {
       mouseWheel: function (e: any) {
         if (e.shiftKey) {
