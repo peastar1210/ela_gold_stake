@@ -325,10 +325,14 @@ export default function PriceCandleChart(props: any) {
   const enableScroll = () => {
     wheelFlag = false
     document.removeEventListener('wheel', preventDefault)
+    document.removeEventListener('click', preventDefault)
   }
   const disableScroll = () => {
     wheelFlag = true
     document.addEventListener('wheel', preventDefault, {
+      passive: false,
+    })
+    document.addEventListener('click', preventDefault, {
       passive: false,
     })
   }
