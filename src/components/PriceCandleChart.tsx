@@ -73,7 +73,7 @@ export default function PriceCandleChart(props: any) {
       backgroundColor: "white",
       color: 'white',
       border: 'white',
-      panning: true, // Enable panning
+      panning: false, // Enable panning
       panKey: 'shift', // Allow panning only when the Ctrl key is pressed
       pinchType:"x",
       zooming: {
