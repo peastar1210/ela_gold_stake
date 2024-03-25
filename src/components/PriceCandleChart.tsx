@@ -18,12 +18,11 @@ export default function PriceCandleChart(props: any) {
     chart: {
       height: 350,
       width: props.width,
-      // backgroundColor: '#1e293b',
       color: 'white',
       border: 'white',
     },
     rangeSelector: {
-      selected: 1, // This selects the default range (e.g. daily, weekly, monthly)
+      selected: 1, 
       buttons: [],
     },
     series: [
@@ -31,26 +30,12 @@ export default function PriceCandleChart(props: any) {
         name: 'GOLD token price',
         type: 'spline',
         data: volume,
-        // dataGrouping: {
-        //   units: [['week', [1]]],
-        //   enabled: false,
-        // },
         pointPlacement: 0.1,
       },
     ],
     navigator: {
       enabled: false,
     },
-    // plotOptions: {
-    //   candlestick: {
-    //     upColor: '#089981', // Color for when the close value is higher than the open value
-    //     color: '#f23645', // Color for when the close value is lower than the open value
-    //     pointPadding: 0,
-    //     groupPadding: 0,
-    //     upLineColor: '#089981',
-    //     lineColor: '#f23645',
-    //   },
-    // },
     xAxis: {
       lineColor: '#333333',
       gridLineColor: '#333333',
@@ -77,22 +62,22 @@ export default function PriceCandleChart(props: any) {
     chart: {
       height: 350,
       width: props.width,
-      // backgroundColor: '#1e293b',
       backgroundColor: "white",
       color: 'white',
       border: 'white',
-      panning: true,
+      panning: 'xy', // Enable panning
+      panKey: 'ctrl', // Allow panning only when the Ctrl key is pressed
     },
     rangeSelector: {
-      selected: 1, // This selects the default range (e.g. daily, weekly, monthly)
+      selected: 1,
       buttons: [],
     },
     scrollbar: {
       enabled: false,
     },
     scrollablePlotArea: {
-      minWidth: 300, // Set the minimum width
-      maxWidth: 300, // Set the maximum width
+      minWidth: 300,
+      maxWidth: 300,
     },
     series: [
       {
@@ -103,8 +88,6 @@ export default function PriceCandleChart(props: any) {
           units: [['week', [1]]],
           enabled: false,
         },
-        // pointPlacement: 0.5,
-        // pointWidth: 10,
       },
     ],
     navigator: {
@@ -112,8 +95,8 @@ export default function PriceCandleChart(props: any) {
     },
     plotOptions: {
       candlestick: {
-        upColor: '#089981', // Color for when the close value is higher than the open value
-        color: '#f23645', // Color for when the close value is lower than the open value
+        upColor: '#089981',
+        color: '#f23645',
         pointPadding: 0,
         groupPadding: chartType === 'price' && interval === 'month' ? 0.003 : 0.01,
         upLineColor: '#089981',
@@ -126,7 +109,7 @@ export default function PriceCandleChart(props: any) {
       gridLineWidth: 1,
       labels: {
         style: {
-          color: 'black', // Set the x-axis text color
+          color: 'black',
         },
       },
     },
@@ -136,12 +119,15 @@ export default function PriceCandleChart(props: any) {
       gridLineWidth: 1,
       labels: {
         style: {
-          color: 'black', // Set the y-axis text color
+          color: 'black',
         },
       },
     },
     accessibility: { enabled: false },
-  }
+  };
+  
+  
+  
   const handlePriceType = (data: any) => {
     if (data === 'price') {
       setPriceButton('bg-gray-700')
@@ -183,13 +169,6 @@ export default function PriceCandleChart(props: any) {
       let data = []
       let volume = []
       for (let i = 1; i < candleData.length; i++) {
-        // const element = [
-        //   candleData[i].time,
-        //   parseFloat(candleData[i].open.toFixed(2)),
-        //   parseFloat(candleData[i].high.toFixed(2)),
-        //   parseFloat(candleData[i].low.toFixed(2)),
-        //   parseFloat(candleData[i].close.toFixed(2)),
-        // ]
         const element = [
           candleData[i].time,
           candleData[i - 1].close,
