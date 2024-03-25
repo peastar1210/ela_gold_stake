@@ -5,7 +5,9 @@
   --bg-color: red;
   overflow: hidden;
 }
-
+html, body {
+  overscroll-behavior-y: contain;
+}
 /* table,
 tr td {
   border: 1px solid red;
@@ -27,3 +29,4 @@ thead {
 table {
   width: 400px;
 } */
+

@@ -20,6 +20,11 @@ export default function PriceCandleChart(props: any) {
       width: props.width,
       color: 'white',
       border: 'white',
+      panning: true, // Enable panning
+      pinchType:"y",
+      zooming: {
+        pinchType: "xy"
+      },
     },
     rangeSelector: {
       selected: 1, 
@@ -65,8 +70,22 @@ export default function PriceCandleChart(props: any) {
       backgroundColor: "white",
       color: 'white',
       border: 'white',
-      panning: 'xy', // Enable panning
-      panKey: 'ctrl', // Allow panning only when the Ctrl key is pressed
+      panning: true, // Enable panning
+      panKey: 'shift', // Allow panning only when the Ctrl key is pressed
+      pinchType:"y",
+      zooming: {
+        pinchType: "xy"
+      },
+      // zoomType: "x"
+    },
+    events: {
+      mouseWheel: function (e: any) {
+        if (e.shiftKey) {
+          var delta = e.wheelDelta || -e.detail;
+          this.chart.scroll(-delta, e.chartX, e.chartY);
+          e.preventDefault();
+        }
+      }
     },
     rangeSelector: {
       selected: 1,
