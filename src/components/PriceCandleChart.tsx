@@ -64,7 +64,7 @@ export default function PriceCandleChart(props: any) {
         },
       },
     },
-    accessibility: { enabled: false },
+    accessibility: { enabled: true },
   }
   const options = {
     chart: {
@@ -148,7 +148,7 @@ export default function PriceCandleChart(props: any) {
         },
       },
     },
-    accessibility: { enabled: false },
+    accessibility: { enabled: true },
   };
   
   
