@@ -229,7 +229,7 @@ export default function PriceCandleChart(props: any) {
           }
           
           const volumeData = [
-            terminalData[i][0],
+            terminalData[i][0] * 1000,
             parseFloat(terminalData[i][5].toFixed(2))
           ]
           volume.push(volumeData)
