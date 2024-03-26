@@ -34,7 +34,7 @@ const KlineChart = (props: any) => {
       <Layout>
         <div
           id="real-time-k-line"
-          className={`w-[${props.width}px] h-[350px] flex touch-auto `}
+          className={`w-[${props.width}px] h-[350px] flex touch-auto`}
           onTouchStart={handleTouchStart}
         />
       </Layout>
