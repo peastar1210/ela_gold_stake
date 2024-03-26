@@ -360,7 +360,7 @@ export default function PriceCandleChart(props: any) {
             {chartType === "price" ? (
               <>
                 {seriesData.length > 0 && (
-                  <div onMouseEnter={disableClick} onMouseLeave={enableClick} onTouchMove={disableMove}>
+                  <div onMouseEnter={disableClick} onMouseLeave={enableClick} onTouchMove={disableMove} className="touch-none">
                     <KlineChart data={seriesData} width={props.width} />
                   </div>
                   //   <div onMouseEnter={disableScroll} onMouseLeave={enableScroll}>
