@@ -4,7 +4,11 @@ import Layout from "@/components/shared/klinechartlayout";
 import { init, dispose, Chart, CandleType, LineType } from "klinecharts";
 import generatedDataList from "../generatedDataList";
 const KlineChart = (props: any) => {
+  
   const chart = useRef<Chart | null>();
+  const disableMove = (event:any) => {
+    event.preventDefault(); // Prevent default behavior of touch move
+  };
   useEffect(() => {
     chart.current = init("real-time-k-line", {
       styles: { grid: { horizontal: { style: LineType.Dashed } } },
@@ -28,6 +32,7 @@ const KlineChart = (props: any) => {
         <div
           id="real-time-k-line"
           className={`w-[${props.width}px] h-[350px] flex`}
+          onTouchMove={disableMove}
         />
       </Layout>
     </>
