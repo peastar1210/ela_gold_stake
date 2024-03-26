@@ -2,7 +2,7 @@ import React from "react";
 const Component = (props:any) => {
   return (
     <>
-      <div className="absolute right-[10%] top-[40px] rounded bg-slate-700 px-1 py-[3px] text-[12px]">
+      <div className="rounded bg-slate-700 px-1 py-[3px] text-[12px] w-[153px] flex h-[30px]">
         <button
           className={`mr-2 ${props.chartPrice} rounded-sm px-1 `}
           onClick={() => {
@@ -27,15 +27,6 @@ const Component = (props:any) => {
         >
           Rewards
         </button>
-      </div>
-      <div className="mt-[40px]">
-        {props.chartStatus === 'stake' ? (
-          <div className="text-white">Total Gold Balance</div>
-        ) : props.chartStatus === 'reward' ? (
-          <div className="text-white">Total Rewards Amount</div>
-        ) : (
-          <div className="text-white">GOLD token price</div>
-        )}
       </div>
     </>
   );

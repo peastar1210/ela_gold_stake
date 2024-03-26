@@ -1,23 +1,32 @@
-import React from "react";
+"use client";
+import React, {useState} from "react";
 import dynamic from "next/dynamic";
-import SelectTransactionType from "@/components/staking/components/shared/SelectTransactionType"
-import PriceChart from "@/components/staking/components/shared/PriceChart"
-import TransactionTable from "@/components/staking/components/shared/TransactionTable"
-import TradingTable from "@/components/staking/components/shared/TradingTable"
-const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
-const Component = (props:any) => {
-  
+import SelectTransactionType from "@/components/staking/components/shared/SelectTransactionType";
+import PriceChart from "@/components/staking/components/shared/PriceChart";
+import TransactionTable from "@/components/staking/components/shared/TransactionTable";
+import TradingTable from "@/components/staking/components/shared/TradingTable";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
+const Filter = dynamic(() => import("@/components/staking/components/shared/Filter"))
+const Component = (props: any) => {
+  const [priceCurrency, setPriceCurrency] = useState<string>("gold")
   return (
     <>
       <div className="h-[945px] w-full justify-center rounded-[12px] bg-white shadow-md shadow-gray-400 border border-gray-200">
-        <div className="relative ml-[40px] flex">
-          <SelectTransactionType
-            chartPrice={props.chartPrice}
-            handleChangeChart={props.handleChangeChart}
-            chartStakes={props.chartStakes}
-            chartRewards={props.chartRewards}
-            chartStatus={props.chartStatus}
-          />
+        <div className="w-full flex justify-center mt-[20px]">
+          <div className="w-full mobile:w-[90%] flex justify-between">
+            <div className="flex items-center">
+              <Filter priceCurrency={priceCurrency} setPriceCurrency={setPriceCurrency}/>
+            </div>
+            <SelectTransactionType
+              chartPrice={props.chartPrice}
+              handleChangeChart={props.handleChangeChart}
+              chartStakes={props.chartStakes}
+              chartRewards={props.chartRewards}
+              chartStatus={props.chartStatus}
+            />
+          </div>
         </div>
         <div className="mt-[25px] flex w-full items-center justify-center">
           {props.chartStatus === "stake" ? (
@@ -54,7 +63,7 @@ const Component = (props:any) => {
               <>
                 <TransactionTable
                   tableData={props.transactionList?.filter(
-                    (item:any) => item.type === "staking"
+                    (item: any) => item.type === "staking"
                   )}
                 />
               </>
@@ -62,7 +71,7 @@ const Component = (props:any) => {
               <>
                 <TransactionTable
                   tableData={props.transactionList?.filter(
-                    (item:any) => item.type === "unstaking"
+                    (item: any) => item.type === "unstaking"
                   )}
                 />
               </>
@@ -70,7 +79,7 @@ const Component = (props:any) => {
               <>
                 <TradingTable
                   tableData={props.transactionList?.filter(
-                    (item:any) => item.type === "staking"
+                    (item: any) => item.type === "staking"
                   )}
                 />
               </>

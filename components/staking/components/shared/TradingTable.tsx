@@ -64,15 +64,15 @@ export default function TradingTable(tableData: any) {
       return `${(timeDifferenceInSeconds / 86400).toFixed(0)}d ago`
     }
   }
-  // const getTradingData = async () => {
-  //   const response = await axios.get(
-  //     'https://api.geckoterminal.com/api/v2/networks/ela/pools/0xc9d4ab43d81466f336d37b9e10ace1c9ae994bcc/trades'
-  //   )
-  //   setTradingData(response.data.data)
-  // }
-  // useEffect(() => {
-  //   getTradingData()
-  // }, [])
+  const getTradingData = async () => {
+    const response = await axios.get(
+      'https://api.geckoterminal.com/api/v2/networks/ela/pools/0xc9d4ab43d81466f336d37b9e10ace1c9ae994bcc/trades'
+    )
+    setTradingData(response.data.data)
+  }
+  useEffect(() => {
+    getTradingData()
+  }, [])
 
   return (
     <Paper
