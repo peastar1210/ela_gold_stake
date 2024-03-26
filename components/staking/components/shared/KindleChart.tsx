@@ -4,7 +4,10 @@ import Layout from "@/components/shared/klinechartlayout";
 import { init, dispose, Chart, CandleType, LineType } from "klinecharts";
 import generatedDataList from "../generatedDataList";
 const KlineChart = (props: any) => {
-  
+  const handleTouchStart = (event:any) => {
+    event.stopPropagation(); // Stop the touch event from propagating to other elements
+    // Your touch start logic here
+  };
   const chart = useRef<Chart | null>();
   const disableMove = (event:any) => {
     event.preventDefault(); // Prevent default behavior of touch move
@@ -31,7 +34,8 @@ const KlineChart = (props: any) => {
       <Layout>
         <div
           id="real-time-k-line"
-          className={`w-[${props.width}px] h-[350px] flex touch-auto`}
+          className={`w-[${props.width}px] h-[350px] flex touch-auto `}
+          onTouchStart={handleTouchStart}
         />
       </Layout>
     </>
