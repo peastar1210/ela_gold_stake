@@ -9,7 +9,6 @@ const KlineChart = (props:any) => {
     chart.current = init("real-time-k-line", {
       styles: { grid: { horizontal: { style: LineType.Dashed } } },
     });
-    console.log("prop.data---->", props.data)
     chart.current?.applyNewData(props.data);
     console.log(generatedDataList());
     chart.current &&

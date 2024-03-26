@@ -104,7 +104,7 @@ const Page = () => {
     const balance = await contract.methods.getContractTokenBalance().call();
     convertBigNumberToInt(balance);
     const response = await axios.post(
-      "https://elastos-backend.onrender.com/api/stakes/getTotalSupplyList",
+      "https://gold-backend-1tcb.onrender.com/api/stakes/getTotalSupplyList",
       {
         totalSupply: convertBigNumberToInt(balance),
       }
@@ -270,7 +270,7 @@ const Page = () => {
     }
     // const response = await axios.post('https://elastos-backend.onrender.com/api/stakes', stakingData)
     const response = await axios.post(
-      "https://elastos-backend.onrender.com/api/stakes",
+      "https://gold-backend-1tcb.onrender.com/api/stakes",
       stakingData
     );
     await getTotalList();
@@ -278,7 +278,7 @@ const Page = () => {
   async function getTotalList() {
     // const response = await axios.post('https://elastos-backend.onrender.com/api/stakes/totalList')
     const response = await axios.post(
-      "https://elastos-backend.onrender.com/api/stakes/totalList"
+      "https://gold-backend-1tcb.onrender.com/api/stakes/totalList"
     );
     setStakersNum(response.data.stakersList.length);
     setDistributedAmount(response.data.distributedAmount);

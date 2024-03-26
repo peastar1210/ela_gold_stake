@@ -195,23 +195,46 @@ export default function PriceCandleChart(props: any) {
   };
   useEffect(() => {
     const getPriceData = async (interval: any) => {
-      const response = await axios.get(
-        "https://api.geckoterminal.com/api/v2/networks/ela/pools/0xc9d4ab43d81466f336d37b9e10ace1c9ae994bcc/ohlcv/day?limit=1000&currency=usd"
-      );
-      // const response = await axios.get("https://api.geckoterminal.com/api/v2/networks/ela/pools/0xc9d4ab43d81466f336d37b9e10ace1c9ae994bcc/ohlcv/day?before_timestamp=1708104984&limit=1000&currency=USD")
-      console.log("response---->", response.data);
-      const terminalData = response.data.data.attributes.ohlcv_list;
-      console.log("terminalData------>", terminalData[terminalData.length - 1]);
+      // const response = await axios.get(
+      //   "https://api.geckoterminal.com/api/v2/networks/ela/pools/0xc9d4ab43d81466f336d37b9e10ace1c9ae994bcc/ohlcv/day?limit=1000&currency=usd"
+      // );
+      // // const response = await axios.get("https://api.geckoterminal.com/api/v2/networks/ela/pools/0xc9d4ab43d81466f336d37b9e10ace1c9ae994bcc/ohlcv/day?before_timestamp=1708104984&limit=1000&currency=USD")
+      // console.log("response---->", response.data);
+      // const terminalData = response.data.data.attributes.ohlcv_list;
+      // console.log("terminalData------>", terminalData[terminalData.length - 1]);
       let data: any = [];
       let volume: any = [];
       for (let i = 1; i < candleData.length; i++) {
-        const element = {
-          timestamp: candleData[i].time,
-          open: candleData[i - 1].close,
-          high: candleData[i].high,
-          low: candleData[i].low,
-          close: candleData[i].close,
-        };
+        let element = {}
+        if(candleData[i - 1].close > candleData[i].high) {
+          element = {
+            timestamp: candleData[i].time,
+            open:candleData[i - 1].close,
+            high: candleData[i - 1].close,
+            low: candleData[i].low,
+            close: candleData[i].close,
+          };
+        } else {
+          if (candleData[i - 1].close < candleData[i].low){
+            element = {
+              timestamp: candleData[i].time,
+              open: candleData[i - 1].close,
+              high: candleData[i].high,
+              low: candleData[i - 1].close,
+              close: candleData[i].close,
+            };
+          } else {
+            element = {
+              timestamp: candleData[i].time,
+              open: candleData[i - 1].close,
+              high: candleData[i].high,
+              low: candleData[i].low,
+              close: candleData[i].close,
+            };
+          }
+          
+        }
+        
         data.push(element);
         const volumeData = [
           candleData[i].time,
@@ -219,37 +242,40 @@ export default function PriceCandleChart(props: any) {
         ];
         volume.push(volumeData);
       }
-      let counter = 0;
-      for (let i = terminalData.length - 1; i >= 0; i--) {
-        if (terminalData[i][0] > 1708128000) {
-          if (counter === 0) {
-            const element: any = {
-              timestamp:terminalData[i][0] * 1000,
-              open:data[data.length - 1][1],
-              high:terminalData[i][2],
-              low:terminalData[i][3],
-              close:terminalData[i][4],
-            };
-            data.push(element);
-            counter++;
-          } else {
-            const element = {
-              timestamp:terminalData[i][0] * 1000,
-              open:terminalData[i][1],
-              high:terminalData[i][2],
-              low:terminalData[i][3],
-              close:terminalData[i][4],
-            };
-            data.push(element);
-          }
+      // let counter = 0;
+      // for (let i = terminalData.length - 1; i >= 0; i--) {
+      //   if (terminalData[i][0] > 1708128000) {
+      //     if (counter === 0) {
+      //       const element: any = {
+      //         timestamp:terminalData[i][0] * 1000,
+      //         // open:data[i][1],
+      //         open:data[data.length - 1].close,
+      //         high:terminalData[i][2],
+      //         low:terminalData[i][3],
+      //         close:terminalData[i][4],
+      //       };
+      //       data.push(element);
+      //       counter++;
+      //     } else {
+      //       console.log("counter---->", counter)
+      //       const element = {
+      //         timestamp:terminalData[i][0] * 1000,
+      //         open:terminalData[i+1][1],
+      //         // open:terminalData[i+1][4],
+      //         high:terminalData[i][2],
+      //         low:terminalData[i][3],
+      //         close:terminalData[i][4],
+      //       };
+      //       data.push(element);
+      //     }
 
-          const volumeData = [
-            terminalData[i][0] * 1000,
-            parseFloat(terminalData[i][5].toFixed(2)),
-          ];
-          volume.push(volumeData);
-        }
-      }
+      //     const volumeData = [
+      //       terminalData[i][0] * 1000,
+      //       parseFloat(terminalData[i][5].toFixed(2)),
+      //     ];
+      //     volume.push(volumeData);
+      //   }
+      // }
       if (interval === "day") {
         setSeriesData(data);
         setVolume(volume);
