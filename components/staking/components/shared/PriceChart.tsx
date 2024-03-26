@@ -205,17 +205,17 @@ export default function PriceCandleChart(props: any) {
       let data: any = [];
       let volume: any = [];
       for (let i = 1; i < candleData.length; i++) {
-        let element = {}
-        if(candleData[i - 1].close > candleData[i].high) {
+        let element = {};
+        if (candleData[i - 1].close > candleData[i].high) {
           element = {
             timestamp: candleData[i].time,
-            open:candleData[i - 1].close,
+            open: candleData[i - 1].close,
             high: candleData[i - 1].close,
             low: candleData[i].low,
             close: candleData[i].close,
           };
         } else {
-          if (candleData[i - 1].close < candleData[i].low){
+          if (candleData[i - 1].close < candleData[i].low) {
             element = {
               timestamp: candleData[i].time,
               open: candleData[i - 1].close,
@@ -232,9 +232,8 @@ export default function PriceCandleChart(props: any) {
               close: candleData[i].close,
             };
           }
-          
         }
-        
+
         data.push(element);
         const volumeData = [
           candleData[i].time,
@@ -285,21 +284,21 @@ export default function PriceCandleChart(props: any) {
         let weekStartIndex = 0;
         let weekEndIndex = 6;
         while (weekEndIndex < data.length - 1) {
-          const weeklyElement = [
-            data[weekStartIndex][0], // Use the timestamp of the first day of the week
-            data[weekStartIndex][1], // Calculate the weekly average of the open prices
-            Math.max(
+          const weeklyElement = {
+            timestamp: data[weekStartIndex].timestamp, // Use the timestamp of the first day of the week
+            open: data[weekStartIndex].open, // Calculate the weekly average of the open prices
+            high: Math.max(
               ...data
                 .slice(weekStartIndex, weekEndIndex)
-                .map((day: any) => day[2])
+                .map((day: any) => day.high)
             ), // Find the highest high price within the week
-            Math.min(
+            low: Math.min(
               ...data
                 .slice(weekStartIndex, weekEndIndex)
-                .map((day: any) => day[3])
+                .map((day: any) => day.low)
             ), // Find the lowest low price within the week
-            data[weekEndIndex + 1][1], // Use the close price of the last day of the week
-          ];
+            close: data[weekEndIndex + 1].open, // Use the close price of the last day of the week
+          };
           const weeklyVolumeData = [
             volume[weekStartIndex][0],
             volume
@@ -315,6 +314,7 @@ export default function PriceCandleChart(props: any) {
           weekStartIndex += 7;
           weekEndIndex += 7;
         }
+        console.log("weeklyData--->", weeklyData)
         setSeriesData(weeklyData);
         setVolume(weeklyVolume);
       } else {
@@ -324,31 +324,31 @@ export default function PriceCandleChart(props: any) {
         let monthEndIndex = 0;
         while (monthEndIndex < data.length - 2) {
           // Find the end index of the current month
-          const currentMonth = new Date(data[monthStartIndex][0]).getMonth();
+          const currentMonth = new Date(data[monthStartIndex].timestamp).getMonth();
           while (
             monthEndIndex < data.length - 2 &&
-            new Date(data[monthEndIndex][0]).getMonth() === currentMonth
+            new Date(data[monthEndIndex].timestamp).getMonth() === currentMonth
           ) {
             monthEndIndex++;
           }
           {
             if (data[monthEndIndex]) {
               // Calculate the monthly OHLCV values
-              const monthlyElement = [
-                data[monthStartIndex][0], // Use the timestamp of the first day of the month
-                data[monthStartIndex][1], // Calculate the monthly average of the open prices
-                Math.max(
+              const monthlyElement = {
+                timestamp: data[monthStartIndex].timestamp, // Use the timestamp of the first day of the month
+                open: data[monthStartIndex].open, // Calculate the monthly average of the open prices
+                high: Math.max(
                   ...data
                     .slice(monthStartIndex, monthEndIndex)
-                    .map((day: any) => day[2])
+                    .map((day: any) => day.high)
                 ), // Find the highest high price within the month
-                Math.min(
+                low: Math.min(
                   ...data
                     .slice(monthStartIndex, monthEndIndex)
-                    .map((day: any) => day[3])
+                    .map((day: any) => day.low)
                 ), // Find the lowest low price within the month
-                data[monthEndIndex][1], // Use the close price of the last day of the month
-              ];
+                close: data[monthEndIndex].open, // Use the close price of the last day of the month
+                };
               const monthlyVolumeData = [
                 volume[monthStartIndex][0],
                 volume
@@ -446,7 +446,7 @@ export default function PriceCandleChart(props: any) {
             {chartType === "price" ? (
               <>
                 {seriesData.length > 0 && (
-                  <KlineChart data={seriesData} width={props.width}/>
+                  <KlineChart data={seriesData} width={props.width} />
                   //   <div onMouseEnter={disableScroll} onMouseLeave={enableScroll}>
                   //     <HighchartsReact
                   //       highcharts={Highcharts}

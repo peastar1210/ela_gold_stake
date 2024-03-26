@@ -9,6 +9,7 @@ const KlineChart = (props:any) => {
     chart.current = init("real-time-k-line", {
       styles: { grid: { horizontal: { style: LineType.Dashed } } },
     });
+    console.log("props.data---->", props.data)
     chart.current?.applyNewData(props.data);
     console.log(generatedDataList());
     chart.current &&
@@ -20,7 +21,7 @@ const KlineChart = (props:any) => {
     return () => {
       dispose("real-time-k-line");
     };
-  }, []);
+  }, [props.data]);
   return (
     <>
       <Layout>
