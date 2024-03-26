@@ -285,14 +285,9 @@ export default function PriceCandleChart(props: any) {
       e.preventDefault();
     }
   };
-  const disablePointerDown = () => {
-    document.addEventListener("pointerdown", preventDefault, {
-      passive: false,
-    });
-  }
-  const enablePointerDown = () => {
-    document.removeEventListener("pointerdown", preventDefault);
-  }
+  const disableMove = (event:any) => {
+    event.preventDefault(); // Prevent default behavior of touch move
+  };
   const enableClick = () => {
     console.log("----->")
     wheelFlag = false;
@@ -365,7 +360,7 @@ export default function PriceCandleChart(props: any) {
             {chartType === "price" ? (
               <>
                 {seriesData.length > 0 && (
-                  <div onMouseEnter={disableClick} onMouseLeave={enableClick} onPointerDown={disablePointerDown} onPointerUp={enablePointerDown}>
+                  <div onMouseEnter={disableClick} onMouseLeave={enableClick} onTouchMove={disableMove}>
                     <KlineChart data={seriesData} width={props.width} />
                   </div>
                   //   <div onMouseEnter={disableScroll} onMouseLeave={enableScroll}>
