@@ -4,7 +4,7 @@ export default function Stake(props: any) {
   return (
     <>
       <div className="mt-[25px] w-full flex-row items-center justify-center text-black">
-        <div className="flex h-[300px] w-full items-center justify-center mobile:h-[220px] desktop:h-[300px]">
+        <div className="flex h-[300px] mobile:w-full items-center justify-center mobile:h-[220px] desktop:h-[300px]">
           <div className="w-full flex-row">
             <div className="w-full flex-row items-center justify-center mobile:inline-flex">
               <div className="mx-auto w-[80%] mobile:mx-1 mobile:w-auto">
