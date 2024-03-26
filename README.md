@@ -1,79 +1,36 @@
-# dApp Starter Boilerplate
-
-A dApp starter kit template to quick start a dapp project with Next.js + Tailwind CSS + Ethers + wagmi + RainbowKit.
-
-Other tools/components included: Headless UI, Heroicons, Autoprefixer, Sass, PostCSS, ESLint, Prettier.
-
-Live preview for this repo: https://dapp-starter.aris.ac
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
-```bash
-# Install Dependencies
-yarn
+First, run the development server:
 
-# Run the development server
+```bash
+npm run dev
+# or
 yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-### ENV
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-# Copy ENV File
-cp .env.example .env.local
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-### Configs
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-- `src/appConfig.ts`: app name, title, SEO etc.
-- `src/pages/_app.tsx`: chains, providers, wallet connectors
+## Learn More
 
-### Scripts
+To learn more about Next.js, take a look at the following resources:
 
-**Next.js**
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-```bash
-# Build
-yarn build
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-# Start server with build files
-yarn start
-```
+## Deploy on Vercel
 
-**Prettier**
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-```bash
-# Use Prettier to do Format Check for files under ./src
-yarn fc
-
-# Use Prettier to do Format Fix for files under ./src
-yarn ff
-```
-
-**Contract Types**
-
-```bash
-# Generate contract types from src/contracts/*.json
-yarn compile-contract-types
-```
-
-### Deployment
-
-The easiest way to deploy your Next.js app is to use [Vercel](https://vercel.com/), by the creators of Next.js.
-
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## More
-
-Learn about components of this kit is using:
-
-- [Next.js](https://nextjs.org/) - React Framework by Vercel
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS Framework
-- [Ethers.js](https://github.com/ethers-io/ethers.js/) - Compact library for interacting with Ethereum.
-- [wagmi](https://wagmi.sh/) - React Hooks for Ethereum
-- [RainbowKit](https://rainbowkit.com/) - React library for wallet connections with dApp.
-- [Headless UI](https://headlessui.dev/) - Unstyled, fully accessible UI components
-
-## License
-
-This app is open-source and licensed under the MIT license. For more details, check the [License file](LICENSE).
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
