@@ -10,14 +10,15 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 });
 const Filter = dynamic(() => import("@/components/staking/components/shared/Filter"))
 const Component = (props: any) => {
-  const [priceCurrency, setPriceCurrency] = useState<string>("gold")
+  const [priceCurrency, setPriceCurrency] = useState<string>("gold");
+  const [filter, setFilter] = useState<any>({})
   return (
     <>
       <div className="h-[945px] w-full justify-center rounded-[12px] bg-white shadow-md shadow-gray-400 border border-gray-200">
         <div className="w-full flex justify-center mt-[20px]">
           <div className="w-full mobile:w-[90%] flex justify-between">
             <div className="flex items-center">
-              <Filter priceCurrency={priceCurrency} setPriceCurrency={setPriceCurrency}/>
+              <Filter priceCurrency={priceCurrency} setPriceCurrency={setPriceCurrency} setFilter={setFilter}/>
             </div>
             <SelectTransactionType
               chartPrice={props.chartPrice}
@@ -53,7 +54,7 @@ const Component = (props: any) => {
             </>
           ) : (
             <>
-              <PriceChart width={props.candleChartWidth} />
+              <PriceChart width={props.candleChartWidth} filter={filter}/>
             </>
           )}
         </div>
@@ -78,9 +79,7 @@ const Component = (props: any) => {
             ) : (
               <>
                 <TradingTable
-                  tableData={props.transactionList?.filter(
-                    (item: any) => item.type === "staking"
-                  )}
+                  filter={filter}
                 />
               </>
             )}

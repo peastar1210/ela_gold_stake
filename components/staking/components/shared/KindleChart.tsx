@@ -2,16 +2,17 @@
 import React, { useEffect, useRef } from "react";
 import Layout from "@/components/shared/klinechartlayout";
 import { init, dispose, Chart, CandleType, LineType } from "klinecharts";
-import generatedDataList from "../generatedDataList";
+import { KLineChartPro, DefaultDatafeed } from '@klinecharts/pro'
+import '@klinecharts/pro/dist/klinecharts-pro.css'
+
+
+
 const KlineChart = (props: any) => {
   const handleTouchStart = (event:any) => {
     event.stopPropagation(); // Stop the touch event from propagating to other elements
     // Your touch start logic here
   };
   const chart = useRef<Chart | null>();
-  const disableMove = (event:any) => {
-    event.preventDefault(); // Prevent default behavior of touch move
-  };
   useEffect(() => {
     chart.current = init("real-time-k-line", {
       styles: { grid: { horizontal: { style: LineType.Dashed } } },
