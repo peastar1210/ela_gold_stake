@@ -423,7 +423,7 @@ export default function PriceCandleChart(props: any) {
 	return (
 		<>
 			<div className="flex-row bg-white w-full mobile:w-[90%]">
-				<div className="mb-[12px] inline-flex w-full text-[12px] text-white">
+				<div className="mb-[12px] inline-flex w-full text-[12px] text-white px-5 mobile:px-0">
 					<button
 						className={`rounded-md bg-gray-600 px-2 py-1 ${priceButton} mr-[5px]`}
 						onClick={() => {

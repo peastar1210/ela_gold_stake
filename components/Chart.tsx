@@ -31,6 +31,19 @@ function TradingViewWidget({ symbol }: { symbol: string }) {
 	const widgetContainer = useRef<HTMLIFrameElement>(null);
 	const [src, getSrc] = useState<string>("");
 
+	// useEffect(() => {
+	// 	if (!widgetContainer) return;
+	// 	const script = document.createElement("script");
+	// 	script.src =
+	// 		"https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+	// 	script.type = "text/javascript";
+	// 	script.async = true;
+	// 	script.innerHTML = `
+	// 		document.getElementsByClassName("h-embed-layout")[0].style.height = calc(100vh - 3.6rem);
+	// 	`;
+	// 	widgetContainer?.current?.appendChild(script);
+	// }, [widgetContainer]);
+
 	useEffect(() => {
 		getSrc(symbols[symbol]);
 	}, [symbol]);

@@ -18,9 +18,9 @@ const Component = (props: any) => {
 
 	return (
 		<>
-			<div className="h-[1000px] w-full justify-center rounded-[12px] bg-white shadow-md shadow-gray-400 border border-gray-200">
+			<div className="h-[1000px] w-full justify-center rounded-[12px] bg-white shadow-md shadow-gray-400 border-top border-gray-200">
 				<div className="w-full flex justify-center mt-[20px]">
-					<div className="w-full mobile:w-[90%] flex justify-between">
+					<div className="w-full mobile:w-[90%] flex justify-between px-5 mobile:px-0">
 						<div className="flex items-center">
 							<Filter
 								priceCurrency={priceCurrency}

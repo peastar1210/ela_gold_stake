@@ -83,3 +83,7 @@ body {
 #widget-container {
 	display: none;
 }
+
+.border-top {
+	border-top-width: 1px;
+}
