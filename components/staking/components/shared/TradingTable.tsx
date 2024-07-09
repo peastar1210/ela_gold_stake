@@ -146,8 +146,9 @@ export default function TradingTable(props: any) {
 						stickyHeader
 						aria-label="sticky table"
 						sx={{ borderRadius: "5px" }}
-						className="rounded-[5px] touch-pan-x touch-pan-y">
-						<TableHead className="">
+						className="rounded-[5px] touch-pan-x touch-pan-y"
+						style={{ WebkitTouchCallout: "none" }}>
+						<TableHead>
 							<TableRow>
 								{columns.map((column, index) => (
 									<TableCell
