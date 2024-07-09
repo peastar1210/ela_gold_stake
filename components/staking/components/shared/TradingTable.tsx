@@ -147,7 +147,7 @@ export default function TradingTable(props: any) {
 						aria-label="sticky table"
 						sx={{ borderRadius: "5px" }}
 						className="rounded-[5px]">
-						<TableHead>
+						<TableHead className=" touch-none">
 							<TableRow>
 								{columns.map((column, index) => (
 									<TableCell
