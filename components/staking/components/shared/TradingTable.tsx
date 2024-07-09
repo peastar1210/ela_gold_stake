@@ -129,7 +129,6 @@ export default function TradingTable(props: any) {
 							height: "3px",
 							border: "none",
 							width: "3px",
-							overscrollBehaviorBlock: "true",
 						},
 						"&::-webkit-scrollbar-thumb": {
 							background: "gray",
@@ -141,6 +140,7 @@ export default function TradingTable(props: any) {
 							// borderRadius: '2px',
 							border: "none",
 						},
+						MozWindowDragging: "false",
 					}}
 					className="rounded-[5px] p-[0px]">
 					<Table
