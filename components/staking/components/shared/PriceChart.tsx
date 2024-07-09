@@ -446,7 +446,7 @@ export default function PriceCandleChart(props: any) {
 								{seriesData.length > 0 && (
 									<div className="relative h-[440px]">
 										{/* <KlineChart data={seriesData} width={props.width} /> */}
-										<Chart symbol={props.filter.symbol} />
+										<Chart poolAddress={props.filter.poolAddress} />
 									</div>
 									//   <div onMouseEnter={disableScroll} onMouseLeave={enableScroll}>
 									//     <HighchartsReact

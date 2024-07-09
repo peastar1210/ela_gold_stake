@@ -140,7 +140,7 @@ export default function TradingTable(props: any) {
 						border: "none",
 					},
 				}}
-				className="rounded-[5px]">
+				className="rounded-[5px] p-[0px]">
 				<Table
 					stickyHeader
 					aria-label="sticky table"

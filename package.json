@@ -26,6 +26,7 @@
 		"core.js": "^0.4.2",
 		"encoding": "^0.1.13",
 		"ethers": "^5.7.2",
+		"firebase": "^10.12.3",
 		"highcharts": "^11.3.0",
 		"highcharts-react-official": "^3.2.1",
 		"intl": "^1.2.5",

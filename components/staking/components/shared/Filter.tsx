@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import SearchIcon from "@mui/icons-material/Search";
@@ -7,6 +7,9 @@ import InputBase from "@mui/material/InputBase";
 import { tokenList } from "@/utils/tokenList";
 import { Autocomplete, Skeleton, TextField } from "@mui/material";
 import axios from "axios";
+
+import { getDatabase, ref, onValue } from "firebase/database";
+import { database } from "../../../../firebase";
 
 const useStyles: any = makeStyles({
 	autocompleteInput: {
@@ -52,7 +55,21 @@ const Filter = (props: any) => {
 		}
 		setFilterLoading(false);
 	};
-	const [filterOption, setFilterOption] = useState<any>(tokenList);
+
+	const [filterOption, setFilterOption] = useState<any>([]);
+
+	useEffect(() => {
+		const tokenRef = ref(database, "tokenList");
+		onValue(tokenRef, (snapshot) => {
+			const data = snapshot.val();
+			if (!!data) {
+				setFilterOption(data);
+			} else {
+				console.log("Data not found");
+			}
+		});
+	}, []);
+
 	const handleChangeFilter = async (e: any) => {
 		setFilter(e.target.value);
 
@@ -132,6 +149,7 @@ const Filter = (props: any) => {
 		},
 	}));
 	const classes = useStyles();
+
 	return (
 		<>
 			<div className="inline-flex">
