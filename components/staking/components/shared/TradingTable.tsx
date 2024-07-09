@@ -120,146 +120,150 @@ export default function TradingTable(props: any) {
 				color: "black",
 			}}
 			className="mt-[10px]">
-			<TableContainer
-				sx={{
-					height: 355,
-					borderRadius: "5px",
-					"&::-webkit-scrollbar": {
-						height: "3px",
-						border: "none",
-						width: "3px",
-					},
-					"&::-webkit-scrollbar-thumb": {
-						background: "gray",
-						// borderRadius: '1px',
-						border: "none",
-						width: "2px !important",
-					},
-					"&::-webkit-scrollbar-track": {
-						// borderRadius: '2px',
-						border: "none",
-					},
-				}}
-				className="rounded-[5px] p-[0px]">
-				<Table
-					stickyHeader
-					aria-label="sticky table"
-					sx={{ borderRadius: "5px" }}
-					className="rounded-[5px]">
-					<TableHead>
-						<TableRow>
-							{columns.map((column, index) => (
-								<TableCell
-									key={index}
-									align={column.align}
-									// style={{ minWidth: column.minWidth, backgroundColor: '#334155', color: '#d1d5db' }}
-									style={{
-										minWidth: column.minWidth,
-										backgroundColor: "#e6e6e6",
-										color: "black",
-									}}>
-									{column.label}
-								</TableCell>
-							))}
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{tradingData
-							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							.map((row: any, index: any) => {
-								return (
-									<TableRow hover role="checkbox" tabIndex={-1} key={index}>
-										<TableCell align="left" className="text-nowrap">
-											<div className="text-black">
-												{handleConvertRemainTime(
-													row.attributes.block_timestamp
-												)}
-											</div>
-										</TableCell>
-										<TableCell align="left">
-											{row.attributes.kind === "buy" ? (
-												<div className="rounded-full bg-green-200 text-center text-green-900">
-													buy
-												</div>
-											) : (
-												<div className="rounded-full bg-red-200 text-center text-red-900">
-													sell
-												</div>
-											)}
-										</TableCell>
-										<TableCell align="left">
-											<div className="text-black">
-												{parseFloat(
-													row.attributes.price_to_in_currency_token
-												).toFixed(2)}
-											</div>
-										</TableCell>
-										<TableCell align="left">
-											<div className="text-black">
-												{parseFloat(row.attributes.price_to_in_usd).toFixed(2)}
-											</div>
-										</TableCell>
-										<TableCell align="left">
-											{row.attributes.kind === "buy" ? (
-												<>
-													<div className="text-black">
-														{parseFloat(
-															parseFloat(
-																row.attributes.to_token_amount
-															).toFixed(6)
-														)}
-													</div>
-												</>
-											) : (
-												<>
-													<div className="text-black">
-														{parseFloat(
-															parseFloat(
-																row.attributes.from_token_amount
-															).toFixed(6)
-														)}
-													</div>
-												</>
-											)}
-										</TableCell>
-										<TableCell align="left">
-											<div className="text-black">
-												{parseFloat(row.attributes.volume_in_usd).toFixed(4)}
-											</div>
-										</TableCell>
-										<TableCell align="left">
-											<Link
-												href={`https://esc.elastos.io/address/${row.attributes.tx_from_address}`}
-												target="_blank">
+			<div className="p-0 m-0">
+				<TableContainer
+					sx={{
+						height: 355,
+						borderRadius: "5px",
+						"&::-webkit-scrollbar": {
+							height: "3px",
+							border: "none",
+							width: "3px",
+						},
+						"&::-webkit-scrollbar-thumb": {
+							background: "gray",
+							// borderRadius: '1px',
+							border: "none",
+							width: "2px !important",
+						},
+						"&::-webkit-scrollbar-track": {
+							// borderRadius: '2px',
+							border: "none",
+						},
+					}}
+					className="rounded-[5px] p-[0px]">
+					<Table
+						stickyHeader
+						aria-label="sticky table"
+						sx={{ borderRadius: "5px" }}
+						className="rounded-[5px]">
+						<TableHead>
+							<TableRow>
+								{columns.map((column, index) => (
+									<TableCell
+										key={index}
+										align={column.align}
+										// style={{ minWidth: column.minWidth, backgroundColor: '#334155', color: '#d1d5db' }}
+										style={{
+											minWidth: column.minWidth,
+											backgroundColor: "#e6e6e6",
+											color: "black",
+										}}>
+										{column.label}
+									</TableCell>
+								))}
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{tradingData
+								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+								.map((row: any, index: any) => {
+									return (
+										<TableRow hover role="checkbox" tabIndex={-1} key={index}>
+											<TableCell align="left" className="text-nowrap">
 												<div className="text-black">
-													{"..." +
-														row.attributes.tx_from_address.substring(36, 43)}
+													{handleConvertRemainTime(
+														row.attributes.block_timestamp
+													)}
 												</div>
-											</Link>
-										</TableCell>
-										<TableCell align="left">
-											<Link
-												href={`https://esc.elastos.io/tx/${row.attributes.tx_hash}/token-transfers`}
-												target="_blank">
-												<img className="w-[21px]" src="transactionLink.svg" />
-											</Link>
-										</TableCell>
-									</TableRow>
-								);
-							})}
-					</TableBody>
-				</Table>
-			</TableContainer>
-			<TablePagination
-				style={{ color: "black" }}
-				rowsPerPageOptions={[10, 25, 100]}
-				component="div"
-				count={tradingData.length}
-				rowsPerPage={rowsPerPage}
-				page={page}
-				onPageChange={handleChangePage}
-				onRowsPerPageChange={handleChangeRowsPerPage}
-			/>
+											</TableCell>
+											<TableCell align="left">
+												{row.attributes.kind === "buy" ? (
+													<div className="rounded-full bg-green-200 text-center text-green-900">
+														buy
+													</div>
+												) : (
+													<div className="rounded-full bg-red-200 text-center text-red-900">
+														sell
+													</div>
+												)}
+											</TableCell>
+											<TableCell align="left">
+												<div className="text-black">
+													{parseFloat(
+														row.attributes.price_to_in_currency_token
+													).toFixed(2)}
+												</div>
+											</TableCell>
+											<TableCell align="left">
+												<div className="text-black">
+													{parseFloat(row.attributes.price_to_in_usd).toFixed(
+														2
+													)}
+												</div>
+											</TableCell>
+											<TableCell align="left">
+												{row.attributes.kind === "buy" ? (
+													<>
+														<div className="text-black">
+															{parseFloat(
+																parseFloat(
+																	row.attributes.to_token_amount
+																).toFixed(6)
+															)}
+														</div>
+													</>
+												) : (
+													<>
+														<div className="text-black">
+															{parseFloat(
+																parseFloat(
+																	row.attributes.from_token_amount
+																).toFixed(6)
+															)}
+														</div>
+													</>
+												)}
+											</TableCell>
+											<TableCell align="left">
+												<div className="text-black">
+													{parseFloat(row.attributes.volume_in_usd).toFixed(4)}
+												</div>
+											</TableCell>
+											<TableCell align="left">
+												<Link
+													href={`https://esc.elastos.io/address/${row.attributes.tx_from_address}`}
+													target="_blank">
+													<div className="text-black">
+														{"..." +
+															row.attributes.tx_from_address.substring(36, 43)}
+													</div>
+												</Link>
+											</TableCell>
+											<TableCell align="left">
+												<Link
+													href={`https://esc.elastos.io/tx/${row.attributes.tx_hash}/token-transfers`}
+													target="_blank">
+													<img className="w-[21px]" src="transactionLink.svg" />
+												</Link>
+											</TableCell>
+										</TableRow>
+									);
+								})}
+						</TableBody>
+					</Table>
+				</TableContainer>
+				<TablePagination
+					style={{ color: "black" }}
+					rowsPerPageOptions={[10, 25, 100]}
+					component="div"
+					count={tradingData.length}
+					rowsPerPage={rowsPerPage}
+					page={page}
+					onPageChange={handleChangePage}
+					onRowsPerPageChange={handleChangeRowsPerPage}
+				/>
+			</div>
 		</Paper>
 	);
 }
