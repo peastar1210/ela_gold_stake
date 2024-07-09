@@ -140,14 +140,14 @@ export default function TradingTable(props: any) {
 							// borderRadius: '2px',
 							border: "none",
 						},
+						"&::-webkit-touch-callout": "none",
 					}}
 					className="rounded-[5px] p-[0px]">
 					<Table
 						stickyHeader
 						aria-label="sticky table"
 						sx={{ borderRadius: "5px" }}
-						className="rounded-[5px] touch-pan-x touch-pan-y"
-						style={{ WebkitTouchCallout: "none" }}>
+						className="rounded-[5px] touch-pan-x touch-pan-y">
 						<TableHead>
 							<TableRow>
 								{columns.map((column, index) => (
