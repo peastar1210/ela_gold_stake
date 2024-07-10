@@ -122,27 +122,60 @@ export default function TradingTable(props: any) {
 		const tableContainer = tableContainerRef.current;
 		if (!tableContainer) return;
 
-		// Prevent default scrolling behavior by blocking touches
-		const touchMove = (event: TouchEvent) => {
-			if (
-				tableContainer.scrollLeft === 0 ||
-				tableContainer.scrollLeft + tableContainer.clientWidth ===
-					tableContainer.scrollWidth
+		let startX = 0;
+		let startY = 0;
+
+		const touchStart = (event: any) => {
+			startX = event.touches[0].clientX;
+			startY = event.touches[0].clientY;
+		};
+
+		const touchMove = (event: any) => {
+			const diffX = event.touches[0].clientX - startX;
+			const diffY = event.touches[0].clientY - startY;
+
+			// Adjust based on your needed resistance
+			const RESISTANCE_FACTOR = 1;
+
+			console.log(
+				"tableContainer.scrollLeft",
+				tableContainer.scrollLeft,
+				tableContainer.scrollWidth - tableContainer.clientWidth
+			);
+			console.log("tableContainer.scrollTop", tableContainer.scrollTop);
+
+			if (tableContainer.scrollLeft <= 0 && diffX > 0) {
+				event.preventDefault();
+				tableContainer.scrollLeft = 0;
+			} else if (
+				tableContainer.scrollLeft >=
+					tableContainer.scrollWidth - tableContainer.clientWidth &&
+				diffX < 0
 			) {
 				event.preventDefault();
+				tableContainer.scrollLeft =
+					tableContainer.scrollWidth - tableContainer.clientWidth;
 			}
-			if (
-				tableContainer.scrollTop === 0 ||
-				tableContainer.scrollTop + tableContainer.clientHeight ===
-					tableContainer.scrollHeight
+
+			if (tableContainer.scrollTop <= 0 && diffY > 0) {
+				event.preventDefault();
+				tableContainer.scrollTop = 0;
+			} else if (
+				tableContainer.scrollTop >=
+					tableContainer.scrollHeight - tableContainer.clientHeight &&
+				diffY < 0
 			) {
 				event.preventDefault();
+				tableContainer.scrollTop =
+					tableContainer.scrollHeight - tableContainer.clientHeight;
 			}
 		};
 
+		tableContainer.addEventListener("touchstart", touchStart);
 		tableContainer.addEventListener("touchmove", touchMove, { passive: false });
 
 		return () => {
+			tableContainer.removeEventListener("touchstart", touchStart);
 			tableContainer.removeEventListener("touchmove", touchMove);
 		};
 	}, []);
