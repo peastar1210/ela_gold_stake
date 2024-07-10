@@ -156,16 +156,6 @@ export default function TradingTable(props: any) {
 				event.preventDefault();
 				tableContainer.scrollLeft =
 					tableContainer.scrollWidth - tableContainer.clientWidth;
-			} else if (tableContainer.scrollLeft < 0) {
-				event.preventDefault();
-				tableContainer.scrollLeft = 0;
-			} else if (
-				tableContainer.scrollLeft >
-				tableContainer.scrollWidth - tableContainer.clientWidth
-			) {
-				event.preventDefault();
-				tableContainer.scrollLeft =
-					tableContainer.scrollWidth - tableContainer.clientWidth;
 			}
 
 			if (tableContainer.scrollTop <= 0 && diffY > 0) {
@@ -179,36 +169,30 @@ export default function TradingTable(props: any) {
 				event.preventDefault();
 				tableContainer.scrollTop =
 					tableContainer.scrollHeight - tableContainer.clientHeight;
-			} else if (tableContainer.scrollTop < 0) {
-				event.preventDefault();
-				tableContainer.scrollTop = 0;
-			} else if (
-				tableContainer.scrollTop >
-				tableContainer.scrollHeight - tableContainer.clientHeight
-			) {
-				event.preventDefault();
-				tableContainer.scrollTop =
-					tableContainer.scrollHeight - tableContainer.clientHeight;
 			}
 		};
 
-		const handleScroll = () => {
+		const handleScroll = (event: any) => {
 			if (tableContainer.scrollLeft <= 0) {
+				event.preventDefault();
 				tableContainer.scrollLeft = 0;
 			} else if (
 				tableContainer.scrollLeft >=
 				tableContainer.scrollWidth - tableContainer.clientWidth
 			) {
+				event.preventDefault();
 				tableContainer.scrollLeft =
 					tableContainer.scrollWidth - tableContainer.clientWidth;
 			}
 
 			if (tableContainer.scrollTop <= 0) {
+				event.preventDefault();
 				tableContainer.scrollTop = 0;
 			} else if (
 				tableContainer.scrollTop >=
 				tableContainer.scrollHeight - tableContainer.clientHeight
 			) {
+				event.preventDefault();
 				tableContainer.scrollTop =
 					tableContainer.scrollHeight - tableContainer.clientHeight;
 			}
