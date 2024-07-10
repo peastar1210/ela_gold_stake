@@ -202,32 +202,42 @@ export default function TradingTable(props: any) {
 	// }, []);
 
 	useEffect(() => {
+		const handleScroll = () => {
+			const tableContainer = tableContainerRef.current;
+			if (!tableContainer) return;
+
+			if (tableContainer.scrollLeft <= 0) {
+				tableContainer.scrollLeft = 0;
+			} else if (
+				tableContainer.scrollLeft >=
+				tableContainer.scrollWidth - tableContainer.clientWidth
+			) {
+				tableContainer.scrollLeft =
+					tableContainer.scrollWidth - tableContainer.clientWidth;
+			}
+
+			if (tableContainer.scrollTop <= 0) {
+				tableContainer.scrollTop = 0;
+			} else if (
+				tableContainer.scrollTop >=
+				tableContainer.scrollHeight - tableContainer.clientHeight
+			) {
+				tableContainer.scrollTop =
+					tableContainer.scrollHeight - tableContainer.clientHeight;
+			}
+		};
+
 		const tableContainer = tableContainerRef.current;
-		if (!tableContainer) return;
-
-		if (tableContainer.scrollLeft <= 0) {
-			tableContainer.scrollLeft = 0;
-		} else if (
-			tableContainer.scrollLeft >=
-			tableContainer.scrollWidth - tableContainer.clientWidth
-		) {
-			tableContainer.scrollLeft =
-				tableContainer.scrollWidth - tableContainer.clientWidth;
+		if (tableContainer) {
+			tableContainer.addEventListener("scroll", handleScroll);
 		}
 
-		if (tableContainer.scrollTop <= 0) {
-			tableContainer.scrollTop = 0;
-		} else if (
-			tableContainer.scrollTop >=
-			tableContainer.scrollHeight - tableContainer.clientHeight
-		) {
-			tableContainer.scrollTop =
-				tableContainer.scrollHeight - tableContainer.clientHeight;
-		}
-	}, [
-		tableContainerRef.current?.scrollLeft,
-		tableContainerRef.current?.scrollTop,
-	]);
+		return () => {
+			if (tableContainer) {
+				tableContainer.removeEventListener("scroll", handleScroll);
+			}
+		};
+	}, []);
 
 	return (
 		<Paper
