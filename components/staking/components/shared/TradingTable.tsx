@@ -138,13 +138,6 @@ export default function TradingTable(props: any) {
 			// Adjust based on your needed resistance
 			const RESISTANCE_FACTOR = 1;
 
-			console.log(
-				"tableContainer.scrollLeft",
-				tableContainer.scrollLeft,
-				tableContainer.scrollWidth - tableContainer.clientWidth
-			);
-			console.log("tableContainer.scrollTop", tableContainer.scrollTop);
-
 			if (tableContainer.scrollLeft <= 0 && diffX > 0) {
 				event.preventDefault();
 				tableContainer.scrollLeft = 0;
