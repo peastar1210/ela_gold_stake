@@ -1,4 +1,10 @@
-import React, { Children, SetStateAction, useEffect, useState } from "react";
+import React, {
+	Children,
+	SetStateAction,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -110,6 +116,61 @@ export default function TradingTable(props: any) {
 		getTradingData();
 	}, [props.filter]);
 
+	const tableContainerRef = useRef<HTMLDivElement | null>(null);
+
+	useEffect(() => {
+		const tableContainer = tableContainerRef.current;
+		if (!tableContainer) return;
+
+		let startX = 0;
+		let startY = 0;
+
+		const touchStart = (event: any) => {
+			startX = event.touches[0].clientX;
+			startY = event.touches[0].clientY;
+		};
+
+		const touchMove = (event: any) => {
+			const diffX = event.touches[0].clientX - startX;
+			const diffY = event.touches[0].clientY - startY;
+
+			// Adjust based on your needed resistance
+			const RESISTANCE_FACTOR = 0.6;
+
+			if (tableContainer.scrollLeft <= 0 && diffX > 0) {
+				event.preventDefault();
+				tableContainer.scrollLeft -= diffX * RESISTANCE_FACTOR;
+			} else if (
+				tableContainer.scrollLeft >=
+					tableContainer.scrollWidth - tableContainer.clientWidth &&
+				diffX < 0
+			) {
+				event.preventDefault();
+				tableContainer.scrollLeft -= diffX * RESISTANCE_FACTOR;
+			}
+
+			if (tableContainer.scrollTop <= 0 && diffY > 0) {
+				event.preventDefault();
+				tableContainer.scrollTop -= diffY * RESISTANCE_FACTOR;
+			} else if (
+				tableContainer.scrollTop >=
+					tableContainer.scrollHeight - tableContainer.clientHeight &&
+				diffY < 0
+			) {
+				event.preventDefault();
+				tableContainer.scrollTop -= diffY * RESISTANCE_FACTOR;
+			}
+		};
+
+		tableContainer.addEventListener("touchstart", touchStart);
+		tableContainer.addEventListener("touchmove", touchMove, { passive: false });
+
+		return () => {
+			tableContainer.removeEventListener("touchstart", touchStart);
+			tableContainer.removeEventListener("touchmove", touchMove);
+		};
+	}, []);
+
 	return (
 		<Paper
 			// sx={{ width: '100%', overflow: 'hidden', backgroundColor: '#334155', color: '#d1d5db', borderRadius: 2 }}
@@ -122,6 +183,7 @@ export default function TradingTable(props: any) {
 			className="mt-[10px]">
 			<div className="p-0 m-0">
 				<TableContainer
+					ref={tableContainerRef}
 					sx={{
 						height: 355,
 						borderRadius: "5px",
@@ -139,6 +201,7 @@ export default function TradingTable(props: any) {
 						"&::-webkit-scrollbar-track": {
 							// borderRadius: '2px',
 							border: "none",
+							top: 0,
 						},
 						"&::scroll-behavior": "auto",
 						touchAction: "manipulation",
@@ -147,8 +210,8 @@ export default function TradingTable(props: any) {
 					<Table
 						stickyHeader
 						aria-label="sticky table"
-						sx={{ borderRadius: "5px", "&::scroll-behavior": "auto" }}
-						className="rounded-[5px] touch-pan-x touch-pan-y">
+						sx={{ borderRadius: "5px" }}
+						className="rounded-[5px]">
 						<TableHead>
 							<TableRow>
 								{columns.map((column, index) => (
