@@ -224,7 +224,10 @@ export default function TradingTable(props: any) {
 			tableContainer.scrollTop =
 				tableContainer.scrollHeight - tableContainer.clientHeight;
 		}
-	}, [tableContainerRef.current]);
+	}, [
+		tableContainerRef.current?.scrollLeft,
+		tableContainerRef.current?.scrollTop,
+	]);
 
 	return (
 		<Paper
