@@ -144,11 +144,22 @@ export default function TradingTable(props: any) {
 			);
 			console.log("tableContainer.scrollTop", tableContainer.scrollTop);
 
-			if (tableContainer.scrollLeft <= 0) {
+			if (tableContainer.scrollLeft <= 0 && diffX > 0) {
 				event.preventDefault();
 				tableContainer.scrollLeft = 0;
 			} else if (
 				tableContainer.scrollLeft >=
+					tableContainer.scrollWidth - tableContainer.clientWidth &&
+				diffX < 0
+			) {
+				event.preventDefault();
+				tableContainer.scrollLeft =
+					tableContainer.scrollWidth - tableContainer.clientWidth;
+			} else if (tableContainer.scrollLeft < 0) {
+				event.preventDefault();
+				tableContainer.scrollLeft = 0;
+			} else if (
+				tableContainer.scrollLeft >
 				tableContainer.scrollWidth - tableContainer.clientWidth
 			) {
 				event.preventDefault();
@@ -156,11 +167,22 @@ export default function TradingTable(props: any) {
 					tableContainer.scrollWidth - tableContainer.clientWidth;
 			}
 
-			if (tableContainer.scrollTop <= 0) {
+			if (tableContainer.scrollTop <= 0 && diffY > 0) {
 				event.preventDefault();
 				tableContainer.scrollTop = 0;
 			} else if (
 				tableContainer.scrollTop >=
+					tableContainer.scrollHeight - tableContainer.clientHeight &&
+				diffY < 0
+			) {
+				event.preventDefault();
+				tableContainer.scrollTop =
+					tableContainer.scrollHeight - tableContainer.clientHeight;
+			} else if (tableContainer.scrollTop < 0) {
+				event.preventDefault();
+				tableContainer.scrollTop = 0;
+			} else if (
+				tableContainer.scrollTop >
 				tableContainer.scrollHeight - tableContainer.clientHeight
 			) {
 				event.preventDefault();
