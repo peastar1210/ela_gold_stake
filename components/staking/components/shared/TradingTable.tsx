@@ -122,51 +122,27 @@ export default function TradingTable(props: any) {
 		const tableContainer = tableContainerRef.current;
 		if (!tableContainer) return;
 
-		let startX = 0;
-		let startY = 0;
-
-		const touchStart = (event: any) => {
-			startX = event.touches[0].clientX;
-			startY = event.touches[0].clientY;
-		};
-
-		const touchMove = (event: any) => {
-			const diffX = event.touches[0].clientX - startX;
-			const diffY = event.touches[0].clientY - startY;
-
-			// Adjust based on your needed resistance
-			const RESISTANCE_FACTOR = 1;
-
-			if (tableContainer.scrollLeft <= 0 && diffX > 0) {
-				event.preventDefault();
-				tableContainer.scrollLeft -= diffX * RESISTANCE_FACTOR;
-			} else if (
-				tableContainer.scrollLeft >=
-					tableContainer.scrollWidth - tableContainer.clientWidth &&
-				diffX < 0
+		// Prevent default scrolling behavior by blocking touches
+		const touchMove = (event: TouchEvent) => {
+			if (
+				tableContainer.scrollLeft === 0 ||
+				tableContainer.scrollLeft + tableContainer.clientWidth ===
+					tableContainer.scrollWidth
 			) {
 				event.preventDefault();
-				tableContainer.scrollLeft -= diffX * RESISTANCE_FACTOR;
 			}
-
-			if (tableContainer.scrollTop <= 0 && diffY > 0) {
-				event.preventDefault();
-				tableContainer.scrollTop -= diffY * RESISTANCE_FACTOR;
-			} else if (
-				tableContainer.scrollTop >=
-					tableContainer.scrollHeight - tableContainer.clientHeight &&
-				diffY < 0
+			if (
+				tableContainer.scrollTop === 0 ||
+				tableContainer.scrollTop + tableContainer.clientHeight ===
+					tableContainer.scrollHeight
 			) {
 				event.preventDefault();
-				tableContainer.scrollTop -= diffY * RESISTANCE_FACTOR;
 			}
 		};
 
-		tableContainer.addEventListener("touchstart", touchStart);
 		tableContainer.addEventListener("touchmove", touchMove, { passive: false });
 
 		return () => {
-			tableContainer.removeEventListener("touchstart", touchStart);
 			tableContainer.removeEventListener("touchmove", touchMove);
 		};
 	}, []);
