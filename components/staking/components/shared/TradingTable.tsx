@@ -180,7 +180,7 @@ export default function TradingTable(props: any) {
 							top: 0,
 						},
 						"&::scroll-behavior": "auto",
-						touchAction: "none",
+						touchAction: "manipulation",
 					}}
 					className="rounded-[5px] p-[0px]">
 					<Table
