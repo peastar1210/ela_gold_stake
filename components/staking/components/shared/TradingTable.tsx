@@ -140,7 +140,7 @@ export default function TradingTable(props: any) {
 							// borderRadius: '2px',
 							border: "none",
 						},
-						MozWindowDragging: "false",
+						touchAction: "manipulation",
 					}}
 					className="rounded-[5px] p-[0px]">
 					<Table
