@@ -135,7 +135,7 @@ export default function TradingTable(props: any) {
 			const diffY = event.touches[0].clientY - startY;
 
 			// Adjust based on your needed resistance
-			const RESISTANCE_FACTOR = 0.6;
+			const RESISTANCE_FACTOR = 1;
 
 			if (tableContainer.scrollLeft <= 0 && diffX > 0) {
 				event.preventDefault();
