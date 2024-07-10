@@ -140,13 +140,14 @@ export default function TradingTable(props: any) {
 							// borderRadius: '2px',
 							border: "none",
 						},
+						"&::scroll-behavior": "auto",
 						touchAction: "manipulation",
 					}}
 					className="rounded-[5px] p-[0px]">
 					<Table
 						stickyHeader
 						aria-label="sticky table"
-						sx={{ borderRadius: "5px" }}
+						sx={{ borderRadius: "5px", "&::scroll-behavior": "auto" }}
 						className="rounded-[5px] touch-pan-x touch-pan-y">
 						<TableHead>
 							<TableRow>
