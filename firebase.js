@@ -29,24 +29,24 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 // Setting the data.
-// const data = [...tokenList];
-// set(ref(database, "tokenList"), data)
-// 	.then(() => {
-// 		// Success.
-// 		console.log("Success", data);
-// 	})
-// 	.catch((error) => {
-// 		console.log(error);
-// 	});
+const data = [...tokenList];
+set(ref(database, "tokenList"), data)
+	.then(() => {
+		// Success.
+		console.log("Success", data);
+	})
+	.catch((error) => {
+		console.log(error);
+	});
 
-// set(ref(database, "updateDate"), new Date().toISOString())
-// 	.then(() => {
-// 		// Success.
-// 		console.log("Success");
-// 	})
-// 	.catch((error) => {
-// 		console.log(error);
-// 	});
+set(ref(database, "updateDate"), new Date().toISOString())
+	.then(() => {
+		// Success.
+		console.log("Success");
+	})
+	.catch((error) => {
+		console.log(error);
+	});
 
 get(child(ref(database), "tokenList"))
 	.then((snapshot) => {

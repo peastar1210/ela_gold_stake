@@ -102,6 +102,6 @@ export const tokenList = [
 	{
 		symbol: "ELA",
 		address: "0xdAD51A97B5582396E9cD9D910b45d7dD8E26c9c0",
-		poolAddress: "0x0",
+		poolAddress: "0x6077b7990d3d0dfb5a50f1d207f67ac5955b999d",
 	},
 ];
