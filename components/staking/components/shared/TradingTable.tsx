@@ -123,26 +123,90 @@ export default function TradingTable(props: any) {
 		const tableContainer = tableContainerRef.current;
 		if (!tableContainer) return;
 
-		tableContainer.scrollLeft = Math.max(
-			0,
-			Math.min(
-				tableContainer.scrollLeft,
-				tableContainer.scrollWidth - tableContainer.clientWidth
-			)
-		);
+		let startX = 0;
+		let startY = 0;
 
-		// Ensure scrollTop is clamped within the allowed range
-		tableContainer.scrollTop = Math.max(
-			0,
-			Math.min(
-				tableContainer.scrollTop,
+		const touchStart = (event: any) => {
+			startX = event.touches[0].clientX;
+			startY = event.touches[0].clientY;
+		};
+
+		const touchMove = (event: any) => {
+			const diffX = event.touches[0].clientX - startX;
+			const diffY = event.touches[0].clientY - startY;
+
+			// Adjust based on your needed resistance
+			const RESISTANCE_FACTOR = 1;
+
+			if (tableContainer.scrollLeft <= 0 && diffX > 0) {
+				event.preventDefault();
+				tableContainer.scrollLeft = 0;
+			} else if (
+				tableContainer.scrollLeft >=
+					tableContainer.scrollWidth - tableContainer.clientWidth &&
+				diffX < 0
+			) {
+				event.preventDefault();
+				tableContainer.scrollLeft =
+					tableContainer.scrollWidth - tableContainer.clientWidth;
+			}
+
+			if (tableContainer.scrollTop <= 0 && diffY > 0) {
+				event.preventDefault();
+				tableContainer.scrollTop = 0;
+			} else if (
+				tableContainer.scrollTop >=
+					tableContainer.scrollHeight - tableContainer.clientHeight &&
+				diffY < 0
+			) {
+				event.preventDefault();
+				tableContainer.scrollTop =
+					tableContainer.scrollHeight - tableContainer.clientHeight;
+			}
+		};
+
+		const handleScroll = (event: any) => {
+			if (tableContainer.scrollLeft <= 0) {
+				event.preventDefault();
+				tableContainer.scrollLeft = 0;
+			} else if (
+				tableContainer.scrollLeft >=
+				tableContainer.scrollWidth - tableContainer.clientWidth
+			) {
+				event.preventDefault();
+				tableContainer.scrollLeft =
+					tableContainer.scrollWidth - tableContainer.clientWidth;
+			}
+
+			if (tableContainer.scrollTop <= 0) {
+				event.preventDefault();
+				tableContainer.scrollTop = 0;
+			} else if (
+				tableContainer.scrollTop >=
 				tableContainer.scrollHeight - tableContainer.clientHeight
-			)
-		);
-	}, [
-		tableContainerRef.current?.scrollLeft,
-		tableContainerRef.current?.scrollTop,
-	]);
+			) {
+				event.preventDefault();
+				tableContainer.scrollTop =
+					tableContainer.scrollHeight - tableContainer.clientHeight;
+			}
+		};
+
+		tableContainer.addEventListener("touchstart", touchStart, {
+			passive: true,
+		});
+		tableContainer.addEventListener("touchmove", touchMove, { passive: true });
+		tableContainer.addEventListener("touchend", handleScroll, {
+			passive: true,
+		});
+		tableContainer.addEventListener("scroll", handleScroll, { passive: true });
+
+		return () => {
+			tableContainer.removeEventListener("touchstart", touchStart);
+			tableContainer.removeEventListener("touchmove", touchMove);
+			tableContainer.removeEventListener("touchend", handleScroll);
+			tableContainer.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
 
 	return (
 		<Paper
