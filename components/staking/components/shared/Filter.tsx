@@ -203,7 +203,7 @@ const Filter = (props: any) => {
 				</div> */}
 				<div className="relative">
 					<input
-						className="absolute w-[100px] border-[1px] border-slate-500 rounded-[5px] outline-none px-[5px] py-[3px] z-[50]"
+						className="absolute w-[95px] border-[1px] border-slate-500 rounded-[5px] outline-none px-[5px] py-[3px] z-[50]"
 						onFocus={handleDropdown}
 						onChange={handleChangeFilter}
 						value={filter === "GOLD" || filter === "ELA" ? "" : filter}
@@ -216,7 +216,7 @@ const Filter = (props: any) => {
 									setDropdown(false);
 								}}></div>
 							<div
-								className={`absolute top-[40px] w-[100px] bg-white ${
+								className={`absolute top-[40px] w-[95px] bg-white ${
 									filterOption.length === 0
 										? "border-white"
 										: "border-slate-500"
