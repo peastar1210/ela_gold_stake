@@ -194,17 +194,17 @@ export default function TradingTable(props: any) {
 		tableContainer.addEventListener("touchstart", touchStart, {
 			passive: true,
 		});
-		tableContainer.addEventListener("touchmove", touchMove, { passive: true });
-		tableContainer.addEventListener("touchend", handleScroll, {
-			passive: true,
-		});
-		tableContainer.addEventListener("scroll", handleScroll, { passive: true });
+		tableContainer.addEventListener("change", touchMove, { passive: true });
+		// tableContainer.addEventListener("touchend", handleScroll, {
+		// 	passive: true,
+		// });
+		// tableContainer.addEventListener("scroll", handleScroll, { passive: true });
 
 		return () => {
 			tableContainer.removeEventListener("touchstart", touchStart);
-			tableContainer.removeEventListener("touchmove", touchMove);
-			tableContainer.removeEventListener("touchend", handleScroll);
-			tableContainer.removeEventListener("scroll", handleScroll);
+			tableContainer.removeEventListener("change", touchMove);
+			// tableContainer.removeEventListener("touchend", handleScroll);
+			// tableContainer.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
 
