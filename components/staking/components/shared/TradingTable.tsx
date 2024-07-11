@@ -193,9 +193,6 @@ export default function TradingTable(props: any) {
 
 		tableContainer.addEventListener("touchstart", touchStart);
 		tableContainer.addEventListener("touchmove", touchMove, { passive: false });
-		tableContainer.addEventListener("change", () => {
-			console.log(tableContainer.scrollLeft);
-		});
 		// tableContainer.addEventListener("touchend", handleScroll, {
 		// 	passive: true,
 		// });
