@@ -193,17 +193,25 @@ export default function TradingTable(props: any) {
 			}
 		};
 
+		const handleEnd = (event: any) => {
+			event.preventDefault();
+			tableContainer.scrollTo(
+				tableContainer.scrollLeft,
+				tableContainer.scrollTop
+			);
+		};
+
 		// tableContainer.addEventListener("touchstart", touchStart);
 		// tableContainer.addEventListener("touchmove", touchMove, { passive: false });
-		// tableContainer.addEventListener("touchend", handleScroll, {
-		// 	passive: true,
-		// });
+		tableContainer.addEventListener("touchend", handleEnd, {
+			passive: false,
+		});
 		tableContainer.addEventListener("scroll", handleScroll, { passive: false });
 
 		return () => {
 			// tableContainer.removeEventListener("touchstart", touchStart);
 			// tableContainer.removeEventListener("touchmove", touchMove);
-			// tableContainer.removeEventListener("touchend", handleScroll);
+			tableContainer.removeEventListener("touchend", handleEnd);
 			tableContainer.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
