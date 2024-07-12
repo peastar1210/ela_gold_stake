@@ -166,11 +166,13 @@ export default function TradingTable(props: any) {
 		};
 
 		const handleScroll = (event: any) => {
-			if (tableContainer.scrollLeft <= 0) {
+			console.log(tableContainer.scrollLeft, tableContainer.scrollTop);
+
+			if (tableContainer.scrollLeft < 0) {
 				event.preventDefault();
 				tableContainer.scrollLeft = 0;
 			} else if (
-				tableContainer.scrollLeft >=
+				tableContainer.scrollLeft >
 				tableContainer.scrollWidth - tableContainer.clientWidth
 			) {
 				event.preventDefault();
@@ -178,11 +180,11 @@ export default function TradingTable(props: any) {
 					tableContainer.scrollWidth - tableContainer.clientWidth;
 			}
 
-			if (tableContainer.scrollTop <= 0) {
+			if (tableContainer.scrollTop < 0) {
 				event.preventDefault();
 				tableContainer.scrollTop = 0;
 			} else if (
-				tableContainer.scrollTop >=
+				tableContainer.scrollTop >
 				tableContainer.scrollHeight - tableContainer.clientHeight
 			) {
 				event.preventDefault();
