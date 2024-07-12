@@ -126,44 +126,44 @@ export default function TradingTable(props: any) {
 		let startX = 0;
 		let startY = 0;
 
-		const touchStart = (event: any) => {
-			startX = event.touches[0].clientX;
-			startY = event.touches[0].clientY;
-		};
+		// const touchStart = (event: any) => {
+		// 	startX = event.touches[0].clientX;
+		// 	startY = event.touches[0].clientY;
+		// };
 
-		const touchMove = (event: any) => {
-			const diffX = event.touches[0].clientX - startX;
-			const diffY = event.touches[0].clientY - startY;
+		// const touchMove = (event: any) => {
+		// 	const diffX = event.touches[0].clientX - startX;
+		// 	const diffY = event.touches[0].clientY - startY;
 
-			// Adjust based on your needed resistance
-			const RESISTANCE_FACTOR = 1;
+		// 	// Adjust based on your needed resistance
+		// 	const RESISTANCE_FACTOR = 1;
 
-			if (tableContainer.scrollLeft <= 0 && diffX > 0) {
-				event.preventDefault();
-				tableContainer.scrollLeft = 0;
-			} else if (
-				tableContainer.scrollLeft >=
-					tableContainer.scrollWidth - tableContainer.clientWidth &&
-				diffX < 0
-			) {
-				event.preventDefault();
-				tableContainer.scrollLeft =
-					tableContainer.scrollWidth - tableContainer.clientWidth;
-			}
+		// 	if (tableContainer.scrollLeft <= 0 && diffX > 0) {
+		// 		event.preventDefault();
+		// 		tableContainer.scrollLeft = 0;
+		// 	} else if (
+		// 		tableContainer.scrollLeft >=
+		// 			tableContainer.scrollWidth - tableContainer.clientWidth &&
+		// 		diffX < 0
+		// 	) {
+		// 		event.preventDefault();
+		// 		tableContainer.scrollLeft =
+		// 			tableContainer.scrollWidth - tableContainer.clientWidth;
+		// 	}
 
-			if (tableContainer.scrollTop <= 0 && diffY > 0) {
-				event.preventDefault();
-				tableContainer.scrollTop = 0;
-			} else if (
-				tableContainer.scrollTop >=
-					tableContainer.scrollHeight - tableContainer.clientHeight &&
-				diffY < 0
-			) {
-				event.preventDefault();
-				tableContainer.scrollTop =
-					tableContainer.scrollHeight - tableContainer.clientHeight;
-			}
-		};
+		// 	if (tableContainer.scrollTop <= 0 && diffY > 0) {
+		// 		event.preventDefault();
+		// 		tableContainer.scrollTop = 0;
+		// 	} else if (
+		// 		tableContainer.scrollTop >=
+		// 			tableContainer.scrollHeight - tableContainer.clientHeight &&
+		// 		diffY < 0
+		// 	) {
+		// 		event.preventDefault();
+		// 		tableContainer.scrollTop =
+		// 			tableContainer.scrollHeight - tableContainer.clientHeight;
+		// 	}
+		// };
 
 		const handleScroll = (event: any) => {
 			console.log(tableContainer.scrollLeft, tableContainer.scrollTop);
@@ -193,16 +193,16 @@ export default function TradingTable(props: any) {
 			}
 		};
 
-		tableContainer.addEventListener("touchstart", touchStart);
-		tableContainer.addEventListener("touchmove", touchMove, { passive: false });
+		// tableContainer.addEventListener("touchstart", touchStart);
+		// tableContainer.addEventListener("touchmove", touchMove, { passive: false });
 		// tableContainer.addEventListener("touchend", handleScroll, {
 		// 	passive: true,
 		// });
 		tableContainer.addEventListener("scroll", handleScroll, { passive: false });
 
 		return () => {
-			tableContainer.removeEventListener("touchstart", touchStart);
-			tableContainer.removeEventListener("touchmove", touchMove);
+			// tableContainer.removeEventListener("touchstart", touchStart);
+			// tableContainer.removeEventListener("touchmove", touchMove);
 			// tableContainer.removeEventListener("touchend", handleScroll);
 			tableContainer.removeEventListener("scroll", handleScroll);
 		};
