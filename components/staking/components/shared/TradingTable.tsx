@@ -126,10 +126,41 @@ export default function TradingTable(props: any) {
 		let startX = 0;
 		let startY = 0;
 
-		// const touchStart = (event: any) => {
-		// 	startX = event.touches[0].clientX;
-		// 	startY = event.touches[0].clientY;
-		// };
+		const touchStart = (event: any) => {
+			// startX = event.touches[0].clientX;
+			// startY = event.touches[0].clientY;
+
+			const scrollLeft = tableContainer.scrollLeft;
+			const scrollTop = tableContainer.scrollTop;
+			const maxScrollLeft =
+				tableContainer.scrollWidth - tableContainer.clientWidth;
+			const maxScrollTop =
+				tableContainer.scrollHeight - tableContainer.clientHeight;
+
+			if (
+				scrollLeft <= 0 &&
+				event.touches[0].clientX > event.target.clientWidth
+			) {
+				event.preventDefault();
+			} else if (
+				scrollLeft >= maxScrollLeft &&
+				event.touches[0].clientX < event.target.clientWidth
+			) {
+				event.preventDefault();
+			}
+
+			if (
+				scrollTop <= 0 &&
+				event.touches[0].clientY > event.target.clientHeight
+			) {
+				event.preventDefault();
+			} else if (
+				scrollTop >= maxScrollTop &&
+				event.touches[0].clientY < event.target.clientHeight
+			) {
+				event.preventDefault();
+			}
+		};
 
 		// const touchMove = (event: any) => {
 		// 	const diffX = event.touches[0].clientX - startX;
@@ -165,54 +196,54 @@ export default function TradingTable(props: any) {
 		// 	}
 		// };
 
-		const handleScroll = (event: any) => {
-			console.log(tableContainer.scrollLeft, tableContainer.scrollTop);
+		// const handleScroll = (event: any) => {
+		// 	console.log(tableContainer.scrollLeft, tableContainer.scrollTop);
 
-			if (tableContainer.scrollLeft < 0) {
-				event.preventDefault();
-				tableContainer.scrollLeft = 0;
-			} else if (
-				tableContainer.scrollLeft >
-				tableContainer.scrollWidth - tableContainer.clientWidth
-			) {
-				event.preventDefault();
-				tableContainer.scrollLeft =
-					tableContainer.scrollWidth - tableContainer.clientWidth;
-			}
+		// 	if (tableContainer.scrollLeft < 0) {
+		// 		event.preventDefault();
+		// 		tableContainer.scrollLeft = 0;
+		// 	} else if (
+		// 		tableContainer.scrollLeft >
+		// 		tableContainer.scrollWidth - tableContainer.clientWidth
+		// 	) {
+		// 		event.preventDefault();
+		// 		tableContainer.scrollLeft =
+		// 			tableContainer.scrollWidth - tableContainer.clientWidth;
+		// 	}
 
-			if (tableContainer.scrollTop < 0) {
-				event.preventDefault();
-				tableContainer.scrollTop = 0;
-			} else if (
-				tableContainer.scrollTop >
-				tableContainer.scrollHeight - tableContainer.clientHeight
-			) {
-				event.preventDefault();
-				tableContainer.scrollTop =
-					tableContainer.scrollHeight - tableContainer.clientHeight;
-			}
-		};
+		// 	if (tableContainer.scrollTop < 0) {
+		// 		event.preventDefault();
+		// 		tableContainer.scrollTop = 0;
+		// 	} else if (
+		// 		tableContainer.scrollTop >
+		// 		tableContainer.scrollHeight - tableContainer.clientHeight
+		// 	) {
+		// 		event.preventDefault();
+		// 		tableContainer.scrollTop =
+		// 			tableContainer.scrollHeight - tableContainer.clientHeight;
+		// 	}
+		// };
 
-		const handleEnd = (event: any) => {
-			event.preventDefault();
-			tableContainer.scrollTo(
-				tableContainer.scrollLeft,
-				tableContainer.scrollTop
-			);
-		};
+		// const handleEnd = (event: any) => {
+		// 	event.preventDefault();
+		// 	tableContainer.scrollTo(
+		// 		tableContainer.scrollLeft,
+		// 		tableContainer.scrollTop
+		// 	);
+		// };
 
-		// tableContainer.addEventListener("touchstart", touchStart);
+		tableContainer.addEventListener("touchstart", touchStart);
 		// tableContainer.addEventListener("touchmove", touchMove, { passive: false });
-		tableContainer.addEventListener("touchend", handleEnd, {
-			passive: false,
-		});
-		tableContainer.addEventListener("scroll", handleScroll, { passive: false });
+		// tableContainer.addEventListener("touchend", handleEnd, {
+		// 	passive: false,
+		// });
+		// tableContainer.addEventListener("scroll", handleScroll, { passive: false });
 
 		return () => {
-			// tableContainer.removeEventListener("touchstart", touchStart);
+			tableContainer.removeEventListener("touchstart", touchStart);
 			// tableContainer.removeEventListener("touchmove", touchMove);
-			tableContainer.removeEventListener("touchend", handleEnd);
-			tableContainer.removeEventListener("scroll", handleScroll);
+			// tableContainer.removeEventListener("touchend", handleEnd);
+			// tableContainer.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
 
