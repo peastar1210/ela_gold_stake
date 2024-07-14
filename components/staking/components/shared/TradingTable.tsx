@@ -138,24 +138,24 @@ export default function TradingTable(props: any) {
 				tableContainer.scrollHeight - tableContainer.clientHeight;
 
 			if (
-				scrollLeft <= 0 &&
+				scrollLeft < 0 &&
 				event.touches[0].clientX > event.target.clientWidth
 			) {
 				event.preventDefault();
 			} else if (
-				scrollLeft >= maxScrollLeft &&
+				scrollLeft > maxScrollLeft &&
 				event.touches[0].clientX < event.target.clientWidth
 			) {
 				event.preventDefault();
 			}
 
 			if (
-				scrollTop <= 0 &&
+				scrollTop < 0 &&
 				event.touches[0].clientY > event.target.clientHeight
 			) {
 				event.preventDefault();
 			} else if (
-				scrollTop >= maxScrollTop &&
+				scrollTop > maxScrollTop &&
 				event.touches[0].clientY < event.target.clientHeight
 			) {
 				event.preventDefault();
