@@ -125,125 +125,57 @@ export default function TradingTable(props: any) {
 
 		let startX = 0;
 		let startY = 0;
+		let scrollLeft = 0;
+		let scrollTop = 0;
 
-		const touchStart = (event: any) => {
-			// startX = event.touches[0].clientX;
-			// startY = event.touches[0].clientY;
-
-			const scrollLeft = tableContainer.scrollLeft;
-			const scrollTop = tableContainer.scrollTop;
-			const maxScrollLeft =
-				tableContainer.scrollWidth - tableContainer.clientWidth;
-			const maxScrollTop =
-				tableContainer.scrollHeight - tableContainer.clientHeight;
-
-			if (
-				scrollLeft < 0 &&
-				event.touches[0].clientX > event.target.clientWidth
-			) {
-				event.preventDefault();
-			} else if (
-				scrollLeft > maxScrollLeft &&
-				event.touches[0].clientX < event.target.clientWidth
-			) {
-				event.preventDefault();
-			}
-
-			if (
-				scrollTop < 0 &&
-				event.touches[0].clientY > event.target.clientHeight
-			) {
-				event.preventDefault();
-			} else if (
-				scrollTop > maxScrollTop &&
-				event.touches[0].clientY < event.target.clientHeight
-			) {
-				event.preventDefault();
-			}
+		const handleTouchStart = (event: any) => {
+			const touch = event.touches[0];
+			startX = touch.clientX;
+			startY = touch.clientY;
+			scrollLeft = tableContainer.scrollLeft;
+			scrollTop = tableContainer.scrollTop;
 		};
 
-		// const touchMove = (event: any) => {
-		// 	const diffX = event.touches[0].clientX - startX;
-		// 	const diffY = event.touches[0].clientY - startY;
+		const handleTouchMove = (event: any) => {
+			event.preventDefault();
+			const touch = event.touches[0];
+			const moveX = touch.clientX - startX;
+			const moveY = touch.clientY - startY;
 
-		// 	// Adjust based on your needed resistance
-		// 	const RESISTANCE_FACTOR = 1;
+			// Calculate new scroll positions
+			let newScrollLeft = scrollLeft - moveX;
+			let newScrollTop = scrollTop - moveY;
 
-		// 	if (tableContainer.scrollLeft <= 0 && diffX > 0) {
-		// 		event.preventDefault();
-		// 		tableContainer.scrollLeft = 0;
-		// 	} else if (
-		// 		tableContainer.scrollLeft >=
-		// 			tableContainer.scrollWidth - tableContainer.clientWidth &&
-		// 		diffX < 0
-		// 	) {
-		// 		event.preventDefault();
-		// 		tableContainer.scrollLeft =
-		// 			tableContainer.scrollWidth - tableContainer.clientWidth;
-		// 	}
+			// Ensure the new scroll positions are within bounds
+			newScrollLeft = Math.max(
+				0,
+				Math.min(
+					newScrollLeft,
+					tableContainer.scrollWidth - tableContainer.clientWidth
+				)
+			);
+			newScrollTop = Math.max(
+				0,
+				Math.min(
+					newScrollTop,
+					tableContainer.scrollHeight - tableContainer.clientHeight
+				)
+			);
 
-		// 	if (tableContainer.scrollTop <= 0 && diffY > 0) {
-		// 		event.preventDefault();
-		// 		tableContainer.scrollTop = 0;
-		// 	} else if (
-		// 		tableContainer.scrollTop >=
-		// 			tableContainer.scrollHeight - tableContainer.clientHeight &&
-		// 		diffY < 0
-		// 	) {
-		// 		event.preventDefault();
-		// 		tableContainer.scrollTop =
-		// 			tableContainer.scrollHeight - tableContainer.clientHeight;
-		// 	}
-		// };
+			tableContainer.scrollLeft = newScrollLeft;
+			tableContainer.scrollTop = newScrollTop;
+		};
 
-		// const handleScroll = (event: any) => {
-		// 	console.log(tableContainer.scrollLeft, tableContainer.scrollTop);
-
-		// 	if (tableContainer.scrollLeft < 0) {
-		// 		event.preventDefault();
-		// 		tableContainer.scrollLeft = 0;
-		// 	} else if (
-		// 		tableContainer.scrollLeft >
-		// 		tableContainer.scrollWidth - tableContainer.clientWidth
-		// 	) {
-		// 		event.preventDefault();
-		// 		tableContainer.scrollLeft =
-		// 			tableContainer.scrollWidth - tableContainer.clientWidth;
-		// 	}
-
-		// 	if (tableContainer.scrollTop < 0) {
-		// 		event.preventDefault();
-		// 		tableContainer.scrollTop = 0;
-		// 	} else if (
-		// 		tableContainer.scrollTop >
-		// 		tableContainer.scrollHeight - tableContainer.clientHeight
-		// 	) {
-		// 		event.preventDefault();
-		// 		tableContainer.scrollTop =
-		// 			tableContainer.scrollHeight - tableContainer.clientHeight;
-		// 	}
-		// };
-
-		// const handleEnd = (event: any) => {
-		// 	event.preventDefault();
-		// 	tableContainer.scrollTo(
-		// 		tableContainer.scrollLeft,
-		// 		tableContainer.scrollTop
-		// 	);
-		// };
-
-		tableContainer.addEventListener("touchstart", touchStart);
-		// tableContainer.addEventListener("touchmove", touchMove, { passive: false });
-		// tableContainer.addEventListener("touchend", handleEnd, {
-		// 	passive: false,
-		// });
-		// tableContainer.addEventListener("scroll", handleScroll, { passive: false });
+		tableContainer.addEventListener("touchstart", handleTouchStart, {
+			passive: false,
+		});
+		tableContainer.addEventListener("touchmove", handleTouchMove, {
+			passive: false,
+		});
 
 		return () => {
-			tableContainer.removeEventListener("touchstart", touchStart);
-			// tableContainer.removeEventListener("touchmove", touchMove);
-			// tableContainer.removeEventListener("touchend", handleEnd);
-			// tableContainer.removeEventListener("scroll", handleScroll);
+			tableContainer.removeEventListener("touchstart", handleTouchStart);
+			tableContainer.removeEventListener("touchmove", handleTouchMove);
 		};
 	}, []);
 
